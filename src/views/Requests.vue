@@ -27,7 +27,7 @@
             <label class="control-label">Select a car</label>
 
             <select
-              class="form-control"
+              class="form-control custom-select"
               name="Car"
               v-model="newRequest.car_id"
               validator="required"
@@ -55,7 +55,7 @@
             label="Describe your car's problem"
           />
           <div class="payment-option">
-            <div class="payment-item active-item"></div>
+            <h5>Select a payment method</h5>
             <div class="payment-item">
               <div class="d-flex align-items-center">
                 <img
@@ -64,6 +64,11 @@
                   alt=""
                 />
                 <span>Any bank cards</span>
+                <img
+                  :src="`${publicPath}img/check.png`"
+                  class="img-fluid check-img ml-auto"
+                  alt=""
+                />
               </div>
             </div>
             <div class="payment-item">
@@ -74,6 +79,11 @@
                   alt=""
                 />
                 <span>PayPal</span>
+                <img
+                  :src="`${publicPath}img/check.png`"
+                  class="img-fluid check-img ml-auto"
+                  alt=""
+                />
               </div>
             </div>
             <div class="payment-item">
@@ -84,6 +94,11 @@
                   alt=""
                 />
                 <span>Master card</span>
+                <img
+                  :src="`${publicPath}img/check.png`"
+                  class="img-fluid check-img ml-auto"
+                  alt=""
+                />
               </div>
             </div>
             <div class="payment-item">
@@ -94,6 +109,11 @@
                   alt=""
                 />
                 <span>Visa cards</span>
+                <img
+                  :src="`${publicPath}img/check.png`"
+                  class="img-fluid check-img ml-auto"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -103,7 +123,7 @@
               caption="Request now"
               button-type="submit"
               @btn-role="setRequest"
-              classes="btn btn-block btn-primary"
+              classes="btn btn-block py-3 btn-primary"
               :disabler="!newRequest.car_id || !newRequest.description"
               activator="saving"
             ></wolf-button>
@@ -240,11 +260,28 @@ export default {
                 this.getRequests();
                 this.toggleModal();
                 this.clearObject(this.newRequest);
+                this.$store.dispatch("togglePendingRequest", {
+                  bool: true,
+                  data: response.data,
+                });
               }
             });
         }
       });
     },
+  },
+  updated() {
+    this.$nextTick(() => {
+      let items = document.querySelectorAll(".payment-item");
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          [...item.parentElement.children].forEach((sib) =>
+            sib.classList.remove("choosen")
+          );
+          item.classList.add("choosen");
+        });
+      });
+    });
   },
 };
 </script>
@@ -253,7 +290,10 @@ export default {
   display: block;
   box-shadow: 0 5px 15px rgb(0 0 0 / 8%);
   background: #fff;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
+}
+.payment-item {
+  padding: 0 0.5rem;
 }
 .payment-item:not(:first-child) {
   border-top: 1px dashed #cac6c6;
@@ -263,5 +303,15 @@ export default {
 img.payment-cards {
   width: 40px;
   height: 40px;
+}
+img.check-img {
+  width: 20px;
+  height: 20px;
+}
+.payment-item:not(.choosen) img.check-img {
+  display: none;
+}
+.payment-item.choosen {
+  background: #cac6c6;
 }
 </style>

@@ -119,7 +119,7 @@
                 validator="required"
               />
               <span class="text-danger" v-if="phoneError"
-                >Phone number alreadyin use by different account</span
+                >Phone number already in use by a different account</span
               >
               <floating-input
                 id="password"

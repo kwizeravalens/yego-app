@@ -20,6 +20,8 @@ export default new Vuex.Store({
     offlineMode: false,
     coords: {},
     pendingRequest: false,
+    garage: JSON.parse(localStorage.getItem("garage")) || null,
+    requestId: localStorage.getItem("requestId") || null,
   },
   mutations: {
     auth_request(state) {
@@ -47,11 +49,25 @@ export default new Vuex.Store({
     toggle_pending_request(state, bool) {
       state.pendingRequest = bool;
     },
+    cancel_request(state) {
+      state.garage = null;
+      state.requestId = null;
+    },
   },
   actions: {
-    togglePendingRequest({ commit }, bool) {
+    togglePendingRequest({ commit }, playload) {
       return new Promise((resolve) => {
-        commit("toggle_pending_request", bool);
+        localStorage.setItem("requestId", playload.data.requestId);
+        localStorage.setItem("garage", JSON.stringify(playload.data.garage));
+        commit("toggle_pending_request", playload.bool);
+        resolve();
+      });
+    },
+    cancelRequest({ commit }) {
+      return new Promise((resolve) => {
+        commit("cancel_request");
+        localStorage.removeItem("garage");
+        localStorage.removeItem("requestId");
         resolve();
       });
     },
@@ -193,5 +209,7 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: (state) => !!state.token,
     authStatus: (state) => state.status,
+    garage: (state) => state.garage,
+    requestId: (state) => state.requestId,
   },
 });

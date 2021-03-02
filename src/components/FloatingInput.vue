@@ -29,6 +29,7 @@
         @keyup="isInputEmpty"
         v-model="inputValue"
         v-validate="validator"
+        rows="4"
       ></textarea>
     </template>
     <span class="invalid-feedback text-danger">

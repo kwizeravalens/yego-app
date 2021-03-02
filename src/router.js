@@ -66,6 +66,13 @@ const router = new Router({
         requiresUserAuth: true,
       },
     },
+    {
+      path: "/map",
+      name: "map",
+      component: () =>
+        import(/* webpackChunkName: "Account" */ "./views/Map.vue"),
+      meta: {},
+    },
   ],
   scrollBehavior() {
     return { x: 0, y: 0 };

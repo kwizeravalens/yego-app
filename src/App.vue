@@ -34,6 +34,7 @@
             Waiting for Garage's reply...
           </h5>
           <hr />
+          <p>You have a pending request</p>
           <div class="d-flex">
             <div
               class="bg-white img-thumbnail rounded-circle mx-auto"
@@ -76,7 +77,6 @@ export default {
       const _vm = this;
       return new Promise((resolve, reject) => {
         function success(position) {
-          console.log(position);
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
           _vm.$store.dispatch("setCurrentLocation", {
@@ -164,6 +164,9 @@ select.form-control {
 }
 .form-group {
   margin: 0 0 0.7rem 0 !important;
+}
+.custom-select:focus {
+  box-shadow: unset;
 }
 @media (max-width: 280px) {
 }

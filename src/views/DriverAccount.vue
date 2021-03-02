@@ -94,7 +94,15 @@
         <div class="mobile">
           <div class="mobile-body">
             <div class="bg-white">
-              <h5 class="pt-3 pl-3 text-primary">Garages near you</h5>
+              <h5 class="pt-3 d-flex px-3 text-primary">
+                <span>Garages near you</span>
+                <router-link
+                  :to="{ name: 'map' }"
+                  class="btn btn-sm btn-primary ml-auto"
+                  style="padding: 0.2rem 1.57rem"
+                  >Map</router-link
+                >
+              </h5>
               <div class="listing-content pb-3 px-3">
                 <div class="d-flex align-items-center">
                   <div class="text-dark"><h6 class="mb-0">S/N</h6></div>
