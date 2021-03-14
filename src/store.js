@@ -52,6 +52,7 @@ export default new Vuex.Store({
     cancel_request(state) {
       state.garage = null;
       state.requestId = null;
+      state.pendingRequest = false;
     },
   },
   actions: {
@@ -211,5 +212,6 @@ export default new Vuex.Store({
     authStatus: (state) => state.status,
     garage: (state) => state.garage,
     requestId: (state) => state.requestId,
+    pendingRequest: (state) => state.pendingRequest,
   },
 });

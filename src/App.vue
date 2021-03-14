@@ -22,7 +22,7 @@
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <bottom-drawer v-if="$store.state.pendingRequest">
+    <bottom-drawer v-if="garage || this.$store.state.garage">
       <img
         slot="overlaycontent"
         :src="`${publicPath}img/loading.gif`"
@@ -34,11 +34,16 @@
             Waiting for Garage's reply...
           </h5>
           <hr />
-          <p>You have a pending request</p>
+          <h6>You have a pending request</h6>
+          <div class="border py-2 px-3">
+            <p class="mb-0">Garage Name: {{ garage.garage_name || "N/A" }}</p>
+            <p class="mb-0">Phone Number: {{ garage.phone || "N/A" }}</p>
+          </div>
           <div class="d-flex">
             <div
               class="bg-white img-thumbnail rounded-circle mx-auto"
               style="padding: 6px; width: 45px; height: 45px"
+              @click="cancelRequest"
             >
               <img
                 :src="`${publicPath}img/icons_delete.png`"
@@ -115,9 +120,17 @@ export default {
         }
       });
     },
+    cancelRequest() {
+      this.$store.dispatch("cancelRequest");
+    },
   },
   updated() {
     this.setActiveRouter();
+  },
+  computed: {
+    garage: function () {
+      return this.$store.getters.garage;
+    },
   },
 };
 </script>

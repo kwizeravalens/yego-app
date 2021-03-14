@@ -4,7 +4,7 @@
       :modalTitle="alertDefaults.title"
       :modalContent="alertDefaults.content"
       :actionButton="alertDefaults.actionButton"
-      @accept-alert="toggleActions(alertDefaults.actionType)"
+      @accept-alert="clearObject(alertDefaults)"
       @close="closeAlert"
       :actionButtonClasses="alertDefaults.classes"
       v-if="alertDefaults.modalOpen"
@@ -229,12 +229,50 @@ export default {
     },
     cars: [],
     requests: [],
+    fetchInterval: null,
+    resolved: false,
+    directId: null,
   }),
   created() {
     this.getCars();
     this.getRequests();
+    if (this.requestId) {
+      this.fetchRequestState();
+    }
+  },
+  computed: {
+    requestId: function () {
+      return this.$store.getters.requestId;
+    },
   },
   methods: {
+    fetchRequestState() {
+      this.fetchInterval = setInterval(() => {
+        let requestId = this.requestId || this.directId;
+        this.$store
+          .dispatch("postRequest", {
+            url: "get_request_state",
+            formData: this.formData({ requestId: requestId }),
+          })
+          .then((response) => {
+            if (response.data.requestInfo.resolved == 1) {
+              clearInterval(this.fetchInterval);
+              this.$store.dispatch("cancelRequest");
+              this.resolved = true;
+              this.alertDefaults = {
+                title: "Request Confirmation",
+                content:
+                  "Your request has been accepted by the garage. Please wait for the technician",
+                actionType: "close_alert",
+                actionButton: "Okey",
+                classes: "btn btn-danger",
+                modalOpen: true,
+              };
+              this.getRequests();
+            }
+          });
+      }, 5000);
+    },
     getCars() {
       this.$store.dispatch("getRequest", "get_driver_cars").then((response) => {
         this.cars = response.data.cars;
@@ -260,10 +298,16 @@ export default {
                 this.getRequests();
                 this.toggleModal();
                 this.clearObject(this.newRequest);
-                this.$store.dispatch("togglePendingRequest", {
-                  bool: true,
-                  data: response.data,
-                });
+                this.directId = response.data.requestId;
+                this.$store.state.garage = response.data.garage;
+                this.$store
+                  .dispatch("togglePendingRequest", {
+                    bool: true,
+                    data: response.data,
+                  })
+                  .then(() => {
+                    this.fetchRequestState();
+                  });
               }
             });
         }

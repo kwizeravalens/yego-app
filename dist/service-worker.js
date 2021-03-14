@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.8912c520bce0713b86437353dc230b5f.js"
+  "precache-manifest.f9e69f2d535e4ca71f23614ffdb97306.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "my-mobo-garage"});
