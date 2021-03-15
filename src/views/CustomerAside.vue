@@ -76,16 +76,6 @@
             <li>
               <router-link :to="{ name: 'accountchangepassword' }">
                 <img
-                  :src="`${publicPath}img/history.png`"
-                  class="icon-img"
-                  alt=""
-                />
-                <span class="menu-text">History</span>
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="{ name: 'accountchangepassword' }">
-                <img
                   :src="`${publicPath}img/cog.png`"
                   class="icon-img"
                   alt=""

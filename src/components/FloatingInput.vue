@@ -17,6 +17,7 @@
         @keyup="isInputEmpty"
         v-model="inputValue"
         v-validate="validator"
+        autocomplete="off"
       />
     </template>
     <template v-else>

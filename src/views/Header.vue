@@ -16,7 +16,7 @@
         class="img-fluid"
         style="width: 32px; height: 32px"
       />
-      <h4 class="font-weight-bold mb-0 text-primary ml-2">Mobo Garage</h4>
+      <h4 class="font-weight-bold mb-0 text-primary ml-2">My Mobile Garage</h4>
       <a href="javascript:void(0)" class="ml-auto">
         <img
           :src="`${publicPath}img/avatar.png`"

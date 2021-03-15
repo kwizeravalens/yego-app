@@ -129,7 +129,15 @@
                 label="Password"
                 v-model="user.password"
               />
-
+              <div class="py-2">
+                <div class="custom-control-input">
+                  <label for="custom-control-label">
+                    <input type="checkbox" v-model="user.agreed" />
+                  </label>
+                  By continue, you agree to
+                  <router-link :to="{}">our terms and conditions</router-link>
+                </div>
+              </div>
               <div class="form-group">
                 <wolf-button
                   load-text=""
@@ -166,6 +174,7 @@ export default {
       email: null,
       phone_number: null,
       password: null,
+      agreed: false,
     },
     emailSent: false,
     emailError: false,

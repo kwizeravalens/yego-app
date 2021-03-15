@@ -16,7 +16,11 @@
     </div>
     <div
       id="loading-wrapper"
-      v-if="$store.state.isLoading && $store.state.activeBtn === null"
+      v-if="
+        $store.state.isLoading &&
+        $store.state.activeBtn === null &&
+        !this.$store.state.garage
+      "
     >
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
@@ -121,7 +125,17 @@ export default {
       });
     },
     cancelRequest() {
-      this.$store.dispatch("cancelRequest");
+      let requestId = this.requestId || this.$store.state.requestId;
+      this.$store
+        .dispatch("postRequest", {
+          formData: this.formData({ requestId: requestId }),
+          url: "cancel_request",
+        })
+        .then((response) => {
+          if (response.data.success) {
+            this.$store.dispatch("cancelRequest");
+          }
+        });
     },
   },
   updated() {
@@ -130,6 +144,9 @@ export default {
   computed: {
     garage: function () {
       return this.$store.getters.garage;
+    },
+    requestId: function () {
+      return this.$store.getters.requestId;
     },
   },
 };
@@ -180,6 +197,31 @@ select.form-control {
 }
 .custom-select:focus {
   box-shadow: unset;
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+}
+.main-container {
+  overflow-x: hidden;
+}
+.success-toast {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  bottom: 30px;
+}
+.success-toast .msg-container {
+  border-radius: 40px;
+  padding: 10px 20px;
+  color: #fff;
+  background: #000;
+  width: 50%;
+  margin: auto;
+  -webkit-transition: opacity 3s ease-in-out;
+  -moz-transition: opacity 3s ease-in-out;
+  -ms-transition: opacity 3s ease-in-out;
+  -o-transition: opacity 3s ease-in-out;
+  opacity: 0.7;
 }
 @media (max-width: 280px) {
 }

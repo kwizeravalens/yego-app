@@ -127,7 +127,7 @@
                     <h5 class="text-dark mb-0">{{ garage.garage_name }}</h5>
                   </div>
                   <div class="date-container ml-auto">
-                    <span>{{ garage.distance.toFixed(3) }} km</span>
+                    <span>{{ garage.distance.toFixed(2) }} km</span>
                   </div>
                 </div>
               </div>

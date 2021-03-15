@@ -28,7 +28,7 @@ export default {
       let coords = !this.isEmpty(this.$store.state.coords)
         ? this.$store.state.coords
         : { lat: -1.9562495999999998, long: 30.1006848 };
-      let map = new google.maps.Map(document.getElementById("mapArea"), {
+      const map = new google.maps.Map(document.getElementById("mapArea"), {
         center: {
           lat: parseFloat(coords.lat),
           lng: parseFloat(coords.long),
@@ -37,23 +37,23 @@ export default {
         mapTypeId: "roadmap",
       });
       for (let i = 0; i < this.garages.length; i++) {
-        var infoWindow = new google.maps.InfoWindow();
+        const infoWindow = new google.maps.InfoWindow();
         var point = new google.maps.LatLng(
           parseFloat(this.garages[i].latitude),
           parseFloat(this.garages[i].longitude)
         );
-        var infowincontent = document.createElement("div");
+        const infowincontent = document.createElement("div");
         var strong = document.createElement("strong");
         strong.textContent = this.garages[i].garage_name;
         infowincontent.appendChild(strong);
         var icon = { label: "G" };
+        infoWindow.setContent(infowincontent);
         const marker = new google.maps.Marker({
           map: map,
           position: point,
           label: icon.label,
         });
         marker.addListener("click", function () {
-          infoWindow.setContent(infowincontent);
           infoWindow.open(map, marker);
         });
       }

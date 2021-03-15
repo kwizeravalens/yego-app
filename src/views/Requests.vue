@@ -55,6 +55,7 @@
             label="Describe your car's problem"
           />
           <div class="payment-option">
+            <h4>You will have amount of RWF 5,000 as commitment fees.</h4>
             <h5>Select a payment method</h5>
             <div class="payment-item">
               <div class="d-flex align-items-center">
@@ -193,21 +194,16 @@
                 </div>
                 <span class="mx-auto">{{ request.plate_number }}</span>
                 <div class="date-container ml-auto">
-                  <span>{{
+                  <span v-if="request.cancelled == 0">{{
                     request.resolved == 0 ? "Pending" : "Resolved"
                   }}</span>
+                  <span
+                    class="text-danger"
+                    v-else-if="request.cancelled == 1 && request.resolved == 1"
+                    >Denied</span
+                  >
+                  <span class="text-warning" v-else>Cancelled</span>
                 </div>
-              </div>
-              <div
-                class="row-actions"
-                v-if="$store.state.currentRow === 'request' + index"
-              >
-                <a href="javascript:void(0)">
-                  <i class="icon-edit"></i> Edit record
-                </a>
-                <a href="javascript:void(0)">
-                  <i class="icon-trash"></i> Delete record
-                </a>
               </div>
             </div>
           </div>
@@ -218,6 +214,7 @@
 </template>
 
 <script>
+//import { CheckoutWave } from "@/_helpers/particle.js";
 export default {
   name: "Requests",
   data: () => ({
@@ -245,17 +242,63 @@ export default {
       return this.$store.getters.requestId;
     },
   },
+  mounted() {
+    /*this.$nextTick(() => {
+      CheckoutWave.then(() => {
+        this.makePayment();
+      });
+    }); */
+  },
   methods: {
+    /*makePayment() {
+      FlutterwaveCheckout({
+        public_key: "FLWPUBK-cf8cc87a6fff2489e71617a066282abe-X",
+        tx_ref: "hooli-tx-1920bbtyt",
+        amount: 100,
+        currency: "RWF",
+        country: "RWF",
+        payment_options: "card,mobile_money_rwanda, ussd",
+        redirect_url: "",
+        meta: {
+          consumer_id: 23,
+          consumer_mac: "92a3-912ba-1192a",
+        },
+        customer: {
+          email: "niyukurijohn@gmail.com",
+          phone_number: "0788508323",
+          name: "Wesley",
+        },
+        callback: function (data) {
+          console.log(data);
+        },
+        onclose: function () {
+          // close modal
+        },
+
+        customizations: {
+          title: "My store",
+          description: "Payment for items in cart",
+          logo: "./logo.png",
+        },
+      });
+    }, */
     fetchRequestState() {
       this.fetchInterval = setInterval(() => {
         let requestId = this.requestId || this.directId;
+        if (!requestId) {
+          clearInterval(this.fetchInterval);
+        }
+        this.$store.state.activeBtn = "Fetching";
         this.$store
           .dispatch("postRequest", {
             url: "get_request_state",
             formData: this.formData({ requestId: requestId }),
           })
           .then((response) => {
-            if (response.data.requestInfo.resolved == 1) {
+            if (
+              response.data.requestInfo.resolved == 1 &&
+              response.data.requestInfo.cancelled == 0
+            ) {
               clearInterval(this.fetchInterval);
               this.$store.dispatch("cancelRequest");
               this.resolved = true;
@@ -263,6 +306,24 @@ export default {
                 title: "Request Confirmation",
                 content:
                   "Your request has been accepted by the garage. Please wait for the technician",
+                actionType: "close_alert",
+                actionButton: "Okey",
+                classes: "btn btn-danger",
+                modalOpen: true,
+              };
+              this.getRequests();
+            }
+            if (
+              response.data.requestInfo.resolved == 1 &&
+              response.data.requestInfo.cancelled == 1
+            ) {
+              clearInterval(this.fetchInterval);
+              this.$store.dispatch("cancelRequest");
+              this.resolved = true;
+              this.alertDefaults = {
+                title: "Request Denied",
+                content:
+                  "Oops! Your request has been denied by the garage. Please try another garage",
                 actionType: "close_alert",
                 actionButton: "Okey",
                 classes: "btn btn-danger",
@@ -286,6 +347,7 @@ export default {
         });
     },
     setRequest() {
+      clearInterval(this.fetchInterval);
       this.$validator.validateAll().then((result) => {
         if (result) {
           this.$store
@@ -300,6 +362,7 @@ export default {
                 this.clearObject(this.newRequest);
                 this.directId = response.data.requestId;
                 this.$store.state.garage = response.data.garage;
+                this.$store.state.requestId = response.data.requestId;
                 this.$store
                   .dispatch("togglePendingRequest", {
                     bool: true,

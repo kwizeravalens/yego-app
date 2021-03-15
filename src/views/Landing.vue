@@ -62,28 +62,21 @@
               />
             </div>
             <div class="pt-3">
-              <h4 class="text-center font-weight-bold mb-1">Mobo Garage</h4>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Placeat, a!
-              </p>
+              <h4 class="text-center font-weight-bold mb-1">
+                My Mobile Garage
+              </h4>
             </div>
             <div class="pt-3 1-100">
               <router-link
                 :to="{ name: 'login' }"
-                class="btn btn-outline-primary btn-block mb-3"
+                class="btn btn-outline-primary btn-block mb-3 py-3"
                 style="background: rgba(39, 43, 65, 0.15); color: #272b41"
-                >Login</router-link
+                >Log into your account</router-link
               >
-              <h5 class="mb-0">Lorem, ipsum dolor.</h5>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Placeat, a!
-              </p>
               <router-link
                 :to="{ name: 'signup' }"
-                class="btn btn-primary ml-auto btn-block"
-                >Register</router-link
+                class="btn btn-primary ml-auto btn-block py-3"
+                >Register Now</router-link
               >
             </div>
           </div>

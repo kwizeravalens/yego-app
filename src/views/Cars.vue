@@ -43,7 +43,6 @@
             v-model="newCar.year"
             name="Year"
             id="Year"
-            validator="required"
             label="Released Year"
           />
 
@@ -61,7 +60,6 @@
             v-model="newCar.comment"
             name="Comment"
             id="Comment"
-            validator="required"
             label="Write some comments(optional)"
           />
 
@@ -144,7 +142,7 @@
                 class="row-actions"
                 v-if="$store.state.currentRow === 'car' + index"
               >
-                <a href="javascript:void(0)" @click.prevent="selectcar(car)">
+                <a href="javascript:void(0)" @click.prevent="selectCar(car)">
                   <i class="icon-edit"></i> Edit record
                 </a>
                 <a href="javascript:void(0)" @click.prevent="carDelete(car)">
@@ -153,6 +151,11 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="success-toast" v-if="successMessage">
+        <div class="msg-container">
+          <span>New car added successfully</span>
         </div>
       </div>
     </div>
@@ -172,11 +175,17 @@ export default {
       comment: null,
     },
     cars: [],
+    successMessage: false,
   }),
   created() {
     this.getCars();
   },
   methods: {
+    showSuccessToast() {
+      setTimeout(() => {
+        this.successMessage = false;
+      }, 5000);
+    },
     getCars() {
       this.$store.dispatch("getRequest", "get_driver_cars").then((response) => {
         this.cars = response.data.cars;
@@ -195,6 +204,8 @@ export default {
                 this.getCars();
                 this.clearObject(this.newCar);
                 this.toggleModal();
+                this.successMessage = true;
+                this.showSuccessToast();
               }
             });
         }
@@ -202,13 +213,17 @@ export default {
     },
     deleteCar() {
       this.$store
-        .dispatch("getRequest", "delete_car" + this.choosenRow.id)
+        .dispatch("postRequest", {
+          url: "delete_car",
+          formData: this.formData({ carId: this.choosenRow.id }),
+        })
         .then(() => {
           this.getCars();
         });
     },
     selectCar(car) {
       this.newCar = { ...car };
+      this.newCar.year = car.car_year;
       this.toggleModal();
     },
     toggleActions(action) {

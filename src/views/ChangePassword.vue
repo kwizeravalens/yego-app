@@ -23,7 +23,7 @@
       <floating-input
         id="new-password-re"
         type="password"
-        validator="required|confirmed:password"
+        validator="required"
         name="Password Confirmation"
         data-vv-as="password"
         v-model="credentials.passwordConf"
@@ -31,12 +31,10 @@
       />
 
       <div class="w-100" v-if="invalidPassword">
-        <div class="alert alert-danger">
-          Invalid Current Password. Try again
-        </div>
+        <div class="h6 text-danger">Invalid Current Password. Try again</div>
       </div>
-      <div class="w-100" v-if="passwordChanged">
-        <div class="alert alert-success">
+      <div class="w-100 py-3" v-if="passwordChanged">
+        <div class="alert h6 alert-success text-success">
           Your Password has been changed successfully.
         </div>
       </div>
@@ -71,7 +69,7 @@ export default {
     },
     changePassword() {
       var formData = this.formData(this.credentials);
-      let url = "user/change-account-password";
+      let url = "change_password";
       let DispatchpParams = { formData: formData, url: url };
       this.$store
         .dispatch("postRequest", DispatchpParams)
@@ -79,7 +77,7 @@ export default {
           if (!response.data.invalid_password) {
             this.invalidPassword = false;
             this.passwordChanged = true;
-            this.clearObject(this.credentials);
+            //this.clearObject(this.credentials);
           } else {
             this.invalidPassword = true;
           }
