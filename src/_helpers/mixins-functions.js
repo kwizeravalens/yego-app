@@ -16,30 +16,34 @@ export const fxCore = {
         actionType: null,
         actionButton: null,
         classes: null,
-        modalOpen: false,
+        modalOpen: false
       },
       choosenRow: {},
       modalOpen: false,
       filterKey: null,
-      publicPath: process.env.BASE_URL,
+      publicPath: process.env.BASE_URL
     };
   },
   computed: {
-    userLogged: function () {
+    userLogged: function() {
       return this.$store.getters.isLoggedIn;
     },
-    filteredRecords: function () {
+    filteredRecords: function() {
       let filterKey = this.filterKey && this.filterKey.toLowerCase();
       let records = this.records;
       if (filterKey) {
-        records = records.filter((row) => {
-          return Object.keys(row).some((key) => {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1;
+        records = records.filter(row => {
+          return Object.keys(row).some(key => {
+            return (
+              String(row[key])
+                .toLowerCase()
+                .indexOf(filterKey) > -1
+            );
           });
         });
       }
       return records;
-    },
+    }
   },
   methods: {
     formData(obj) {
@@ -99,7 +103,7 @@ export const fxCore = {
       return key === arrLen - 1;
     },
     isEmpty(obj) {
-      const isNULL = Object.values(obj).every((x) => x === null);
+      const isNULL = Object.values(obj).every(x => x === null);
       return Object.keys(obj).length === 0 || isNULL === true;
     },
     addComma(num) {
@@ -123,7 +127,7 @@ export const fxCore = {
     chatDate(str) {
       let options = {
         month: "short",
-        day: "numeric",
+        day: "numeric"
       };
       let today = new Date(str);
       return today.toLocaleDateString("en-US", options);
@@ -132,7 +136,7 @@ export const fxCore = {
       let options = {
         year: "numeric",
         month: "short",
-        day: "numeric",
+        day: "numeric"
       };
       let today = new Date(str);
       return today.toLocaleDateString("en-US", options);
@@ -141,6 +145,6 @@ export const fxCore = {
       if (this.$store.state.currentRow !== rowKey)
         this.$store.state.currentRow = rowKey;
       else this.$store.state.currentRow = null;
-    },
-  },
+    }
+  }
 };

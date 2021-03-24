@@ -57,26 +57,21 @@
             <div class="text-center w-100">
               <img
                 src="@/assets/logo.png"
-                style="cursor: pointer; width: 35% !important"
+                style="cursor: pointer; width: 75% !important"
                 class="img-fluid"
               />
             </div>
             <div class="pt-3">
               <h4 class="text-center font-weight-bold mb-1">
-                My Mobile Garage
+                Welcome to Yego Cabs App
               </h4>
             </div>
             <div class="pt-3 1-100">
               <router-link
-                :to="{ name: 'login' }"
+                :to="{ name: 'home' }"
                 class="btn btn-outline-primary btn-block mb-3 py-3"
                 style="background: rgba(39, 43, 65, 0.15); color: #272b41"
-                >Log into your account</router-link
-              >
-              <router-link
-                :to="{ name: 'signup' }"
-                class="btn btn-primary ml-auto btn-block py-3"
-                >Register Now</router-link
+                >Get Started Now!</router-link
               >
             </div>
           </div>
@@ -147,7 +142,7 @@ export default {
         window.location.href.split("#")[0] + "#/driver-account";
     }
   },
-  methods: {},
+  methods: {}
 };
 </script>
 <style scoped lang="css">

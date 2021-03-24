@@ -45,41 +45,41 @@ export default {
     value: {},
     label: {
       type: String,
-      required: true,
+      required: true
     },
     type: {
       type: String,
       required: true,
-      default: "text",
+      default: "text"
     },
     placeholder: {
       type: String,
       required: false,
-      default: "",
+      default: ""
     },
     id: {
       type: String,
-      required: true,
+      required: true
     },
     name: {
       type: String,
-      required: true,
+      required: true
     },
     validator: {
       type: String,
       required: false,
-      default: "",
-    },
+      default: ""
+    }
   },
   data: () => ({
     isFocused: false,
     isEmptyOrWhite: true,
-    inputValue: null,
+    inputValue: null
   }),
   watch: {
     inputValue(value) {
       this.$emit("input", value);
-    },
+    }
   },
   mounted() {
     this.inputValue = this.value;
@@ -98,7 +98,7 @@ export default {
         this.isEmptyOrWhite = !val || val.trim() === "";
         this.$emit("changed");
       }
-    },
-  },
+    }
+  }
 };
 </script>

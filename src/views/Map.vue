@@ -7,7 +7,7 @@ import { loadedGoogleMapsAPI } from "@/_helpers/assets-loader.js";
 export default {
   name: "Map",
   data: () => ({
-    garages: [],
+    garages: []
   }),
   created() {
     document.body.classList.remove("modal-open");
@@ -17,9 +17,9 @@ export default {
     this.$store
       .dispatch("postRequest", {
         url: "garages",
-        formData: this.formData(coords),
+        formData: this.formData(coords)
       })
-      .then((response) => {
+      .then(response => {
         this.garages = response.data.garages;
       });
   },
@@ -31,10 +31,10 @@ export default {
       const map = new google.maps.Map(document.getElementById("mapArea"), {
         center: {
           lat: parseFloat(coords.lat),
-          lng: parseFloat(coords.long),
+          lng: parseFloat(coords.long)
         },
         zoom: 13,
-        mapTypeId: "roadmap",
+        mapTypeId: "roadmap"
       });
       for (let i = 0; i < this.garages.length; i++) {
         const infoWindow = new google.maps.InfoWindow();
@@ -51,19 +51,19 @@ export default {
         const marker = new google.maps.Marker({
           map: map,
           position: point,
-          label: icon.label,
+          label: icon.label
         });
-        marker.addListener("click", function () {
+        marker.addListener("click", function() {
           infoWindow.open(map, marker);
         });
       }
-    },
+    }
   },
   mounted() {
     loadedGoogleMapsAPI.then(() => {
       this.initMap();
     });
-  },
+  }
 };
 </script>
 <style lang="css">

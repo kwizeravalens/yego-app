@@ -21,7 +21,7 @@ export default new Vuex.Store({
     coords: {},
     pendingRequest: false,
     garage: JSON.parse(localStorage.getItem("garage")) || null,
-    requestId: localStorage.getItem("requestId") || null,
+    requestId: localStorage.getItem("requestId") || null
   },
   mutations: {
     auth_request(state) {
@@ -53,11 +53,11 @@ export default new Vuex.Store({
       state.garage = null;
       state.requestId = null;
       state.pendingRequest = false;
-    },
+    }
   },
   actions: {
     togglePendingRequest({ commit }, playload) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         localStorage.setItem("requestId", playload.data.requestId);
         localStorage.setItem("garage", JSON.stringify(playload.data.garage));
         commit("toggle_pending_request", playload.bool);
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       });
     },
     cancelRequest({ commit }) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         commit("cancel_request");
         localStorage.removeItem("garage");
         localStorage.removeItem("requestId");
@@ -73,13 +73,13 @@ export default new Vuex.Store({
       });
     },
     setUser({ commit }, user) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         commit("set_user", user);
         resolve();
       });
     },
     setCurrentLocation({ commit }, coords) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         commit("set_current_location", coords);
         resolve();
       });
@@ -90,9 +90,9 @@ export default new Vuex.Store({
         axios({
           url: dataParams.url,
           data: dataParams.formData,
-          method: "POST",
+          method: "POST"
         })
-          .then((resp) => {
+          .then(resp => {
             const token = resp.data.token;
             if (token) {
               localStorage.removeItem("token");
@@ -103,7 +103,7 @@ export default new Vuex.Store({
 
             resolve(resp);
           })
-          .catch((err) => {
+          .catch(err => {
             if (!err.response) {
               commit("offline_mode");
             }
@@ -117,7 +117,7 @@ export default new Vuex.Store({
         commit("auth_request");
         axios
           .post("login", user)
-          .then((resp) => {
+          .then(resp => {
             const token = resp.data.token;
             if (token) {
               localStorage.setItem("token", token);
@@ -126,7 +126,7 @@ export default new Vuex.Store({
             }
             resolve(resp);
           })
-          .catch((err) => {
+          .catch(err => {
             if (!err.response) {
               commit("offline_mode");
             }
@@ -136,7 +136,7 @@ export default new Vuex.Store({
       });
     },
     logout({ commit }) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         commit("logout");
         localStorage.removeItem("token");
         delete axios.defaults.headers.common["Authorization"];
@@ -152,7 +152,7 @@ export default new Vuex.Store({
         commit("auth_request");
         axios
           .post(dataParams.url, dataParams.formData)
-          .then((resp) => {
+          .then(resp => {
             if (resp.data.unauthorized) {
               this.dispatch("logout").then(() => {
                 window.location.replace("/");
@@ -160,7 +160,7 @@ export default new Vuex.Store({
             }
             resolve(resp);
           })
-          .catch((err) => {
+          .catch(err => {
             if (!err.response) {
               commit("offline_mode");
             } else {
@@ -184,7 +184,7 @@ export default new Vuex.Store({
         }
         axios
           .post(getURL, fd)
-          .then((resp) => {
+          .then(resp => {
             if (resp.data.unauthorized) {
               this.dispatch("logout").then(() => {
                 window.location.replace("/");
@@ -192,7 +192,7 @@ export default new Vuex.Store({
             }
             resolve(resp);
           })
-          .catch((err) => {
+          .catch(err => {
             if (!err.response) {
               commit("offline_mode");
             } else {
@@ -205,13 +205,13 @@ export default new Vuex.Store({
             reject(err);
           });
       });
-    },
+    }
   },
   getters: {
-    isLoggedIn: (state) => !!state.token,
-    authStatus: (state) => state.status,
-    garage: (state) => state.garage,
-    requestId: (state) => state.requestId,
-    pendingRequest: (state) => state.pendingRequest,
-  },
+    isLoggedIn: state => !!state.token,
+    authStatus: state => state.status,
+    garage: state => state.garage,
+    requestId: state => state.requestId,
+    pendingRequest: state => state.pendingRequest
+  }
 });

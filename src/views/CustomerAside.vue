@@ -107,7 +107,7 @@ export default {
   data: () => ({}),
   created() {
     if (this.isEmpty(this.$store.state.user) && this.userLogged) {
-      this.$store.dispatch("getRequest", "get_logged_user").then((response) => {
+      this.$store.dispatch("getRequest", "get_logged_user").then(response => {
         this.$store.dispatch("setUser", response.data.user);
       });
     }
@@ -121,8 +121,8 @@ export default {
     toggleSideBar() {
       document.getElementById("app-wrapper").classList.toggle("toggled");
       this.$store.state.toggled = !this.$store.state.toggled;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="css">
