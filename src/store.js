@@ -18,6 +18,8 @@ export default new Vuex.Store({
     currentRow: null,
     toggled: false,
     offlineMode: false,
+    drawerOpen: false,
+    drawerBottomOpen: false,
     coords: {},
     pendingRequest: false,
     garage: JSON.parse(localStorage.getItem("garage")) || null,

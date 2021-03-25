@@ -100,7 +100,7 @@
                 label="Your name"
               />
               <floating-input
-                id="Phone"
+                id="NationalId"
                 v-model="user.national_id"
                 name="National ID"
                 label="National ID"
@@ -181,6 +181,7 @@ export default {
       fullname: null,
       email: null,
       phone_number: null,
+      national_id: null,
       password: null,
       agreed: false
     },

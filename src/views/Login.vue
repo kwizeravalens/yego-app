@@ -83,7 +83,7 @@
               <img
                 src="@/assets/logo.png"
                 class="img-fluid"
-                style="cursor: pointer; width: 35% !important"
+                style="cursor: pointer; width: 75% !important"
               />
             </div>
             <h5 class="my-2 mt-4 text-center font-weight-bold">Login</h5>

@@ -10,8 +10,11 @@
           Where are you going?
         </h6>
         <div class="form-group" style="padding: 10px 0px;">
-          <div class="input-group" style="height:60px!important">
-            <div class="input-group-prepend">
+          <div class="input-group" style="position:relative">
+            <div
+              class="input-group-prepend"
+              style="position:absolute; top: 28%; left: 5px"
+            >
               <span>
                 <img src="@/assets/icons/marker.svg" />
               </span>
@@ -19,7 +22,7 @@
             <input
               id="whereTo"
               v-model="whereToLocation"
-              class="form-control"
+              class="form-control pl-4"
               type="text"
               autocomplete="off"
               name="whereTo"
@@ -50,16 +53,19 @@
         id="origin-input-container"
         class="height-auto"
         :class="{ hidden: !whereToLocation }"
-        style="position: absolute; top: 11%;"
+        style="position: absolute; top: 10px!important"
       >
         <div class="w-100 map-input-container map-input-container-top">
-          <span
-            class="fas fa-location-arrow location-icon-rotate map-input-icon"
-          />
-          <div class="map-input display-flex">
+          <span class="map-input-icon">
+            <img
+              :src="`${publicPath}img/place_mark.png`"
+              style="width: 17px;"
+            />
+          </span>
+          <div class="map-input d-flex">
             <input
               id="pac-input-from"
-              class="controls flex-1"
+              class="controls flex-1 form-control"
               type="text"
               placeholder="Enter an origin location"
               @focusout="toggleRideOptions"
@@ -74,10 +80,10 @@
           <span class="map-input-icon">
             <img src="@/assets/icons/circle.svg" />
           </span>
-          <div class="map-input display-flex">
+          <div class="map-input d-flex">
             <input
               id="pac-input-to"
-              class="controls flex-1"
+              class="controls flex-1 form-control"
               type="text"
               placeholder="Enter a destination location"
             />
@@ -132,9 +138,12 @@
           <div class="addresses-container position-relative">
             <div class="height-auto">
               <div class="w-100 map-input-container map-input-container-top">
-                <span
-                  class="fas fa-location-arrow location-icon-rotate map-input-icon"
-                />
+                <span class="map-input-icon">
+                  <img
+                    :src="`${publicPath}img/place_mark.png`"
+                    style="width: 17px;"
+                  />
+                </span>
                 <div class="map-input mr-0 display-flex">
                   <input
                     class="controls flex-1 font-weight-light"
@@ -358,8 +367,11 @@ export default {
         url: "http://ip-api.com/json/",
         method: "GET",
         headers: { "Content-Type": null }
-      }).then(response => {
-        this.GetCoords(response.data.lat, response.data.lon);
+      }).then(() => {
+        this.GetCoords(
+          this.$store.state.coords.lat,
+          this.$store.state.coords.long
+        );
       });
     },
     GetCoords(lat, lon) {
@@ -420,7 +432,7 @@ export default {
         url:
           "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
           currentLatLon +
-          "&key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI",
+          "&key=AIzaSyCsv-5eNr-tKaYfATuPRvQy914TNr880Gw",
         method: "GET",
         headers: { "Content-Type": null }
       }).then(response => {
@@ -495,7 +507,11 @@ export default {
         });
     },
     setWhereToAddress() {
-      if (this.whereToLocation.trim() !== "" && this.whereToLocation !== null) {
+      if (
+        this.whereToLocation.trim() !== "" &&
+        this.whereToLocation !== null &&
+        this.whereToLocation.trim().length > 1
+      ) {
         var input = document.getElementById("pac-input-to");
         this.setCaretPosition(input, input.value.length);
       }
@@ -510,5 +526,8 @@ export default {
   left: auto;
   right: auto;
   margin: 0 auto;
+}
+#origin-input-container {
+  top: 10px !important;
 }
 </style>

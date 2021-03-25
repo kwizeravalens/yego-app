@@ -448,4 +448,14 @@ a[href^="https://maps.google.com/maps"] {
     display: none !important;
   }
 }
+.controls {
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 50px;
+  outline: none;
+}
+.media {
+  display: flex;
+}
 </style>

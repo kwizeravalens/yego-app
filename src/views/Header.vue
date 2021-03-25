@@ -1,5 +1,8 @@
 <template>
-  <header class="header pl-1 align-items-center">
+  <header
+    class="header pl-1 align-items-center"
+    :class="{ 'map-header': currentRouteName === 'map' }"
+  >
     <div class="toggle-btns">
       <a id="toggle-sidebar" href="javascript:void(0)" @click="toggleSideBar">
         <img
@@ -9,14 +12,11 @@
         />
       </a>
     </div>
-    <div class="d-flex w-100 pl-3 align-items-center">
-      <img
-        src="@/assets/logo.png"
-        alt="User Account"
-        class="img-fluid"
-        style="width: 32px; height: 32px"
-      />
-      <h4 class="font-weight-bold mb-0 text-primary ml-2">My Mobile Garage</h4>
+    <div
+      class="d-flex w-100 pl-3 align-items-center"
+      v-if="currentRouteName !== 'map'"
+    >
+      <h4 class="font-weight-bold mb-0 text-primary ml-2">YEGO Cabs ltd</h4>
       <a href="javascript:void(0)" class="ml-auto">
         <img
           :src="`${publicPath}img/avatar.png`"
@@ -32,6 +32,11 @@ export default {
   name: "Header",
   data: () => ({}),
   created() {},
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    }
+  },
   methods: {
     togglePinned() {
       document.getElementById("app-wrapper").classList.toggle("pinned");
@@ -67,6 +72,11 @@ export default {
   box-shadow: 0 0.75pt 0 0 rgba(139, 141, 157, 0.05),
     10px 0.75pt 5.25pt 0 rgba(65, 71, 108, 0.15) !important;
   margin-bottom: 1rem;
+}
+.header.map-header {
+  background: transparent !important;
+  box-shadow: unset !important;
+  width: 40px !important;
 }
 .header .toggle-btns #pin-sidebar:hover,
 .header .toggle-btns #toggle-sidebar:hover {
