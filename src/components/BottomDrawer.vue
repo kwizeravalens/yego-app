@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "BottomDrawer",
-  methods: {},
+  methods: {}
 };
 </script>
 <style lang="css">
