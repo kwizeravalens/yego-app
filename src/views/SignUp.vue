@@ -100,6 +100,14 @@
                 label="Your name"
               />
               <floating-input
+                id="NationalId"
+                v-model="user.national_id"
+                name="National ID"
+                label="National ID"
+                type="number"
+                validator="required"
+              />
+              <floating-input
                 id="email"
                 type="email"
                 validator="required|email"
@@ -173,18 +181,19 @@ export default {
       fullname: null,
       email: null,
       phone_number: null,
+      national_id: null,
       password: null,
-      agreed: false,
+      agreed: false
     },
     emailSent: false,
     emailError: false,
     phoneError: false,
-    agreed: true,
+    agreed: true
   }),
   created() {},
   methods: {
     signUp() {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.validateAll().then(result => {
         if (result) {
           this.$store.dispatch("logout").then(() => {
             var formData = this.formData(this.user);
@@ -194,7 +203,7 @@ export default {
             this.phoneError = false;
             this.$store
               .dispatch("authRequest", DispatchpParams)
-              .then((response) => {
+              .then(response => {
                 if (response.data.email_error) this.emailError = true;
                 else if (response.data.phone_error) this.phoneError = true;
                 else if (response.data.success) {
@@ -204,7 +213,7 @@ export default {
           });
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>

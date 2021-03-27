@@ -35,7 +35,7 @@
                           :class="{
                             'progress-bar-striped progress-bar-animated':
                               progressBarWidth < 100,
-                            'bg-success': progressBarWidth >= 100,
+                            'bg-success': progressBarWidth >= 100
                           }"
                           role="progressbar"
                           :aria-valuenow="progressBarWidth"
@@ -67,22 +67,22 @@ export default {
   props: {
     uploadURL: {
       type: String,
-      default: "ap/trashed-images",
+      default: "ap/trashed-images"
     },
     needImagePreview: {
       type: Boolean,
-      default: true,
+      default: true
     },
     extentions: {
       type: Array,
-      default: function () {
+      default: function() {
         return ["png", "jpg", "gif", "jpeg"];
-      },
+      }
     },
     inputId: {
       type: String,
-      default: "wolf-file",
-    },
+      default: "wolf-file"
+    }
   },
   data: () => ({
     selectedFile: null,
@@ -92,7 +92,7 @@ export default {
     wolfDocument: null,
     fileUploaded: false,
     uploading: true,
-    invalidFile: false,
+    invalidFile: false
   }),
   methods: {
     handleFilePickUp() {
@@ -117,25 +117,25 @@ export default {
         this.$store.state.activeBtn = "wolf-button";
         this.axios
           .post(this.uploadURL, fd, {
-            onUploadProgress: (uploadEvent) => {
+            onUploadProgress: uploadEvent => {
               let percentage = Math.round(
                 (uploadEvent.loaded / uploadEvent.total) * 100
               );
               this.progressBarWidth = percentage + "%";
               this.percentageCount = percentage;
-            },
+            }
           })
-          .then((response) => {
+          .then(response => {
             this.fileUploaded = true;
             this.wolfDocument = response.data.filename;
             this.$emit("after-uploading", response.data.filename);
             this.wolfUploading = false;
           })
-          .catch((e) => {
+          .catch(e => {
             console.log(e);
           });
       } else this.invalidFile = true;
-    },
-  },
+    }
+  }
 };
 </script>

@@ -83,7 +83,7 @@
               <img
                 src="@/assets/logo.png"
                 class="img-fluid"
-                style="cursor: pointer; width: 35% !important"
+                style="cursor: pointer; width: 75% !important"
               />
             </div>
             <h5 class="my-2 mt-4 text-center font-weight-bold">Login</h5>
@@ -145,20 +145,20 @@ export default {
   data: () => ({
     credentials: {
       username: null,
-      password: null,
+      password: null
     },
     invalidLogin: false,
-    loginSucceed: false,
+    loginSucceed: false
   }),
   created() {},
   methods: {
-    logUser: function () {
-      this.$validator.validateAll().then((result) => {
+    logUser: function() {
+      this.$validator.validateAll().then(result => {
         if (result) {
           var formData = this.formData(this.credentials);
           this.$store
             .dispatch("logUser", formData)
-            .then((response) => {
+            .then(response => {
               if (response.data.error) {
                 this.invalidLogin = true;
                 this.loginSucceed = false;
@@ -168,11 +168,11 @@ export default {
                 this.$router.push({ name: "account" });
               }
             })
-            .catch((err) => console.log(err));
+            .catch(err => console.log(err));
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped lang="css">

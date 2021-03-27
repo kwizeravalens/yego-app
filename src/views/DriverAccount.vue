@@ -144,7 +144,7 @@ export default {
   data: () => ({
     user: {},
     requests: {},
-    garages: [],
+    garages: []
   }),
   created() {
     document.body.classList.remove("modal-open");
@@ -154,14 +154,14 @@ export default {
     this.$store
       .dispatch("postRequest", {
         url: "dashboard",
-        formData: this.formData(coords),
+        formData: this.formData(coords)
       })
-      .then((response) => {
+      .then(response => {
         this.requests = { ...response.data.requests };
         this.garages = response.data.garages;
       });
   },
-  methods: {},
+  methods: {}
 };
 </script>
 <style lang="css" scoped>

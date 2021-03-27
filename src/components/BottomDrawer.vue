@@ -1,6 +1,6 @@
 <template>
-  <div class="drawer-container" @click.self="$emit('close')">
-    <div class="overlay-content d-flex">
+  <div class="drawer-container">
+    <div class="overlay-content d-flex" @click.self="$emit('close')">
       <div class="d-flex mx-auto my-auto">
         <slot name="overlaycontent" />
       </div>

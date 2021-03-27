@@ -18,8 +18,8 @@
       id="loading-wrapper"
       v-if="
         $store.state.isLoading &&
-        $store.state.activeBtn === null &&
-        !this.$store.state.garage
+          $store.state.activeBtn === null &&
+          !this.$store.state.garage
       "
     >
       <div class="spinner-border" role="status">
@@ -71,11 +71,11 @@ export default {
   components: {
     HeaderCustomer,
     CustomerAside,
-    Offline,
+    Offline
   },
   data: () => ({
     isMobile: false,
-    status: null,
+    status: null
   }),
   created() {
     this.checkMobileEnv();
@@ -90,7 +90,7 @@ export default {
           const longitude = position.coords.longitude;
           _vm.$store.dispatch("setCurrentLocation", {
             lat: latitude,
-            long: longitude,
+            long: longitude
           });
           resolve();
         }
@@ -116,7 +116,7 @@ export default {
       this.isMobile = mq.matches;
     },
     setActiveRouter() {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         let elts = document.getElementsByClassName("router-link-exact-active");
         if (elts.length) {
           elts[0].parentElement.classList.add("active");
@@ -129,26 +129,26 @@ export default {
       this.$store
         .dispatch("postRequest", {
           formData: this.formData({ requestId: requestId }),
-          url: "cancel_request",
+          url: "cancel_request"
         })
-        .then((response) => {
+        .then(response => {
           if (response.data.success) {
             this.$store.dispatch("cancelRequest");
           }
         });
-    },
+    }
   },
   updated() {
     this.setActiveRouter();
   },
   computed: {
-    garage: function () {
+    garage: function() {
       return this.$store.getters.garage;
     },
-    requestId: function () {
+    requestId: function() {
       return this.$store.getters.requestId;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -228,5 +228,234 @@ select.form-control {
 @media (min-width: 576px) {
 }
 @media (max-width: 479px) {
+}
+
+.location-icon-rotate {
+  transform: rotate(136deg);
+}
+#origin-input-container {
+  padding: 0 16px;
+  width: 100%;
+  left: 0px !important;
+}
+.map-input-container-top {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.map-input-container-bottom {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#origin-input,
+#destination-input {
+  background-color: #fff;
+  font-family: "Roboto Condensed";
+  font-size: 15px;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding-right: 8px;
+}
+#searchingModal .search {
+  width: auto;
+  margin: 0 auto;
+  padding: 24px 8px;
+}
+#searchingModal .search .fa-spinner {
+  color: #d50007;
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+.map-input-container .map-input {
+  width: 100%;
+  margin-right: 16px;
+}
+.map-input-container .map-input span {
+  line-height: 50px;
+  font-size: 18px;
+}
+.map-input-container .map-input .mic {
+  margin-right: 8px;
+  color: #e4e4e4;
+}
+.map-input-container .map-input .remove {
+  color: #707070;
+}
+.map-input-container .map-input .remove img {
+  height: 14px;
+  margin-left: 4px;
+}
+.map-input-container:first-child .map-input {
+  border-bottom: 1px solid #f1f3f8;
+}
+.hdpi.pac-logo:after {
+  display: none;
+}
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.col-xs-12,
+.col-sm-12 {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.pac-container {
+  height: 100%;
+  width: 100% !important;
+  left: 0px !important;
+  padding: 0px 28px;
+  border-top: none;
+  font-family: "Roboto Condensed";
+  top: 163px !important;
+  font-size: 20px !important;
+  box-shadow: none;
+}
+.pac-container .pac-icon {
+  margin-right: 16px;
+}
+.pac-container .pac-item-query,
+.pac-container .pac-matched {
+  font-weight: 300 !important;
+}
+.pac-container .pac-item {
+  padding: 8px 0;
+  border-top: none;
+}
+#map > div {
+  background-color: #ffffff !important;
+}
+#map1,
+#map2,
+#map3 {
+  height: 120px;
+}
+a[href^="http://maps.google.com/maps"] {
+  display: none !important;
+}
+a[href^="https://maps.google.com/maps"] {
+  display: none !important;
+}
+.gmnoprint a,
+.gmnoprint span,
+.gm-style-cc {
+  display: none;
+}
+.gmnoprint div {
+  background: none !important;
+}
+.gm-bundled-control.gm-bundled-control-on-bottom {
+  display: none;
+}
+.map-input-container {
+  background-color: #ffffff;
+  display: flex;
+}
+.map-input-container .map-input-icon {
+  color: #4a4f64;
+  background-color: #ffffff;
+  margin: 0 15px;
+  line-height: 50px;
+}
+.map-input-container input {
+  flex: 1;
+  background-color: #ffffff;
+}
+.map-input-container input:focus {
+  border: none;
+}
+.dotted-line {
+  height: 35px;
+  position: absolute;
+  width: 1px;
+  border: 1px dashed #ffffff;
+  z-index: 100;
+  margin-top: -14px;
+  margin-left: 4px;
+  background: linear-gradient(to right, #707070 50%, #707070 0%),
+    linear-gradient(#707070 50%, #707070 0%),
+    linear-gradient(to right, #707070 50%, rgba(112, 112, 112, 0) 0%),
+    linear-gradient(#707070 50%, rgba(112, 112, 112, 0) 0%);
+  background-repeat: repeat-x, repeat-y;
+  background-size: 1px 0px, 1px 1px;
+}
+.dotted-line-index {
+  height: 38px;
+  position: absolute;
+  width: 1px;
+  border: 1px dashed #ffffff;
+  z-index: 100;
+  margin-top: -17px;
+  margin-left: 19px;
+  background: linear-gradient(to right, #707070 50%, #707070 0%),
+    linear-gradient(#707070 50%, #707070 0%),
+    linear-gradient(to right, #707070 50%, rgba(112, 112, 112, 0) 0%),
+    linear-gradient(#707070 50%, rgba(112, 112, 112, 0) 0%);
+  background-repeat: repeat-x, repeat-y;
+  background-size: 1px 0px, 1px 1px;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.7);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 46px rgba(252, 211, 0, 0.3);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.3);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.7);
+    box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.7);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 46px rgba(252, 211, 0, 0.3);
+    box-shadow: 0 0 0 46px rgba(252, 211, 0, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(252, 211, 0, 0.3);
+    box-shadow: 0 0 0 0 rgba(252, 211, 0, 0);
+  }
+}
+@-webkit-keyframes slide_up_ride {
+  0% {
+    top: auto;
+  }
+  25% {
+    top: 250px;
+  }
+}
+@keyframes slide_up_ride {
+  0% {
+    top: auto;
+  }
+  25% {
+    top: 250px;
+  }
+}
+@media all and (orientation: landscape) and (max-height: 616px) {
+  .slide-up {
+    display: none !important;
+  }
+}
+@media all and (max-height: 712px) {
+  .tapped-car-info.request .addresses-container,
+  .tapped-car-info.request .all-trip-fares,
+  .request-ride-info .addresses-container,
+  .request-ride-info .notification-container {
+    display: none !important;
+  }
+}
+.controls {
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 50px;
+  outline: none;
+}
+.media {
+  display: flex;
 }
 </style>

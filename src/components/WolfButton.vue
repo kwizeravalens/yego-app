@@ -23,41 +23,41 @@ export default {
   props: {
     caption: {
       type: String,
-      required: true,
+      required: true
     },
     loadText: {
       type: String,
-      required: true,
+      required: true
     },
     classes: {
       type: String,
-      required: true,
+      required: true
     },
     buttonType: {
       type: String,
-      default: "button",
+      default: "button"
     },
     height: {
       type: Number,
-      default: 14,
+      default: 14
     },
     width: {
       type: Number,
-      default: 14,
+      default: 14
     },
     color: {
       type: String,
-      default: "#fff",
+      default: "#fff"
     },
     activator: {
       type: String,
-      required: true,
+      required: true
     },
     disabler: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 };
 </script>
 <style lang="css" scoped>

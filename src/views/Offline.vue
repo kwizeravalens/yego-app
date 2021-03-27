@@ -128,7 +128,7 @@
 
 <script>
 export default {
-  name: "Offline",
+  name: "Offline"
 };
 </script>
 <style scoped lang="css">
