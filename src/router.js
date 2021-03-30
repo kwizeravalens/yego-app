@@ -14,28 +14,29 @@ const router = new Router({
       name: "landing",
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/Landing.vue"),
-      meta: {}
+      meta: {},
     },
     {
       path: "/home",
       name: "home",
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/Home.vue"),
-      meta: {}
+      meta: {},
     },
     {
       path: "/register",
       name: "signup",
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/SignUp.vue"),
-      meta: {}
+      meta: {},
     },
     {
       path: "/login",
       name: "login",
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/Login.vue"),
-      meta: {}
+      meta: {},
+      props: true
     },
     {
       path: "/driver-account",
@@ -43,8 +44,8 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/DriverAccount.vue"),
       meta: {
-        requiresUserAuth: true
-      }
+        requiresUserAuth: true,
+      },
     },
     {
       path: "/cars",
@@ -52,8 +53,8 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/Cars.vue"),
       meta: {
-        requiresUserAuth: true
-      }
+        requiresUserAuth: true,
+      },
     },
     {
       path: "/requests",
@@ -61,8 +62,8 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/Requests.vue"),
       meta: {
-        requiresUserAuth: true
-      }
+        requiresUserAuth: true,
+      },
     },
     {
       path: "/change-password",
@@ -70,30 +71,39 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/ChangePassword.vue"),
       meta: {
-        requiresUserAuth: true
-      }
+        requiresUserAuth: true,
+      },
     },
     {
       path: "/map",
       name: "map",
       component: () =>
         import(/* webpackChunkName: "Account" */ "./views/Dashboard.vue"),
-      meta: {}
-    }
+      meta: {},
+    },
+    {
+      path: "/driver-requests",
+      name: "DriverRequests",
+      component: () =>
+        import(/* webpackChunkName: "Account" */ "./views/DriverRequests.vue"),
+      meta: {
+        requiresUserAuth: true,
+      },
+    },
   ],
   scrollBehavior() {
     return { x: 0, y: 0 };
-  }
+  },
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresUserAuth)) {
+  if (to.matched.some((record) => record.meta.requiresUserAuth)) {
     if (store.getters.isLoggedIn) {
       next();
       return;
     }
     window.location.replace("/login");
-  } else if (to.matched.some(record => record.meta.requiresCustomerAuth)) {
+  } else if (to.matched.some((record) => record.meta.requiresCustomerAuth)) {
     if (store.getters.isLoggedIn) {
       next();
       return;

@@ -18,15 +18,15 @@
       id="loading-wrapper"
       v-if="
         $store.state.isLoading &&
-          $store.state.activeBtn === null &&
-          !this.$store.state.garage
+        $store.state.activeBtn === null &&
+        !this.$store.state.driver
       "
     >
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <bottom-drawer v-if="garage || this.$store.state.garage">
+    <bottom-drawer v-if="driver || this.$store.state.driver">
       <img
         slot="overlaycontent"
         :src="`${publicPath}img/loading.gif`"
@@ -35,13 +35,13 @@
       <div slot="contents">
         <div class="text-center w-100">
           <h5 class="font-weight-bold text-primary mb-0">
-            Waiting for Garage's reply...
+            Waiting for Driver's reply...
           </h5>
           <hr />
           <h6>You have a pending request</h6>
           <div class="border py-2 px-3">
-            <p class="mb-0">Garage Name: {{ garage.garage_name || "N/A" }}</p>
-            <p class="mb-0">Phone Number: {{ garage.phone || "N/A" }}</p>
+            <p class="mb-0">Driver Name: {{ driver.firstname || "N/A" }}</p>
+            <p class="mb-0">Phone Number: {{ driver.phone || "N/A" }}</p>
           </div>
           <div class="d-flex">
             <div
@@ -71,11 +71,11 @@ export default {
   components: {
     HeaderCustomer,
     CustomerAside,
-    Offline
+    Offline,
   },
   data: () => ({
     isMobile: false,
-    status: null
+    status: null,
   }),
   created() {
     this.checkMobileEnv();
@@ -90,7 +90,7 @@ export default {
           const longitude = position.coords.longitude;
           _vm.$store.dispatch("setCurrentLocation", {
             lat: latitude,
-            long: longitude
+            long: longitude,
           });
           resolve();
         }
@@ -116,7 +116,7 @@ export default {
       this.isMobile = mq.matches;
     },
     setActiveRouter() {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         let elts = document.getElementsByClassName("router-link-exact-active");
         if (elts.length) {
           elts[0].parentElement.classList.add("active");
@@ -129,26 +129,26 @@ export default {
       this.$store
         .dispatch("postRequest", {
           formData: this.formData({ requestId: requestId }),
-          url: "cancel_request"
+          url: "cancel_request",
         })
-        .then(response => {
+        .then((response) => {
           if (response.data.success) {
             this.$store.dispatch("cancelRequest");
           }
         });
-    }
+    },
   },
   updated() {
     this.setActiveRouter();
   },
   computed: {
-    garage: function() {
-      return this.$store.getters.garage;
+    driver: function () {
+      return this.$store.getters.driver;
     },
-    requestId: function() {
+    requestId: function () {
       return this.$store.getters.requestId;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -203,25 +203,6 @@ select.form-control {
 }
 .main-container {
   overflow-x: hidden;
-}
-.success-toast {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  bottom: 30px;
-}
-.success-toast .msg-container {
-  border-radius: 40px;
-  padding: 10px 20px;
-  color: #fff;
-  background: #000;
-  width: 50%;
-  margin: auto;
-  -webkit-transition: opacity 3s ease-in-out;
-  -moz-transition: opacity 3s ease-in-out;
-  -ms-transition: opacity 3s ease-in-out;
-  -o-transition: opacity 3s ease-in-out;
-  opacity: 0.7;
 }
 @media (max-width: 280px) {
 }
@@ -330,10 +311,12 @@ select.form-control {
 #map3 {
   height: 120px;
 }
-a[href^="http://maps.google.com/maps"] {
+a[href^="http://maps.google.com/maps"]
+{
   display: none !important;
 }
-a[href^="https://maps.google.com/maps"] {
+a[href^="https://maps.google.com/maps"]
+{
   display: none !important;
 }
 .gmnoprint a,

@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "BottomDrawer",
-  methods: {}
+  methods: {},
 };
 </script>
 <style lang="css">
@@ -25,7 +25,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1050;
+  z-index: 999999999999;
   overflow: hidden;
   outline: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -48,5 +48,9 @@ export default {
   bottom: 0;
   z-index: 1052;
   width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* top: 40px; */
 }
 </style>

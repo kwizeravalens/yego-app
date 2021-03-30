@@ -8,7 +8,7 @@
         height: 35px;
         line-height: 35px;
         padding: unset;
-        position: absolute;
+        position: fixed;
         top: 12px;
         left: 17px;
         z-index: 9;
@@ -88,7 +88,7 @@
               />
             </div>
             <h5 class="mt-4 mb-2 text-center font-weight-bold">
-              Sign up as a driver
+              {{ accountType == 'driver' ? `Sign up as a driver` : 'Sign up a passenger' }}
             </h5>
             <form ref="userForm" autocomplete="off" @submit.prevent="signUp">
               <floating-input
@@ -100,6 +100,7 @@
                 label="Your name"
               />
               <floating-input
+                v-if="accountType == 'driver'"
                 id="NationalId"
                 v-model="user.national_id"
                 name="National ID"
@@ -120,7 +121,7 @@
               >
               <floating-input
                 id="Phone"
-                v-model="user.phone_number"
+                v-model="user.phone"
                 name="Phone Number"
                 label="Mobile number"
                 type="number"
@@ -180,22 +181,27 @@ export default {
     user: {
       fullname: null,
       email: null,
-      phone_number: null,
+      phone: null,
       national_id: null,
       password: null,
-      agreed: false
+      agreed: false,
     },
     emailSent: false,
     emailError: false,
     phoneError: false,
-    agreed: true
+    agreed: true,
+    accountType: "driver"
   }),
   created() {},
+  mounted(){
+    this.accountType = this.$route.query.accountType;
+  },
   methods: {
     signUp() {
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll().then((result) => {
         if (result) {
           this.$store.dispatch("logout").then(() => {
+            this.user.accountType = this.accountType;
             var formData = this.formData(this.user);
             let url = "register";
             let DispatchpParams = { formData: formData, url: url };
@@ -203,17 +209,20 @@ export default {
             this.phoneError = false;
             this.$store
               .dispatch("authRequest", DispatchpParams)
-              .then(response => {
+              .then((response) => {
                 if (response.data.email_error) this.emailError = true;
                 else if (response.data.phone_error) this.phoneError = true;
                 else if (response.data.success) {
-                  this.$router.push({ name: "account" });
+                  if(response.data.user.userType == "driver")
+                  this.$router.push({ name: "DriverRequests" });
+                else
+                  this.$router.push({ name: "map" });
                 }
               });
           });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>

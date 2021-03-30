@@ -8,7 +8,7 @@
         height: 35px;
         line-height: 35px;
         padding: unset;
-        position: absolute;
+        position: fixed;
         top: 12px;
         left: 17px;
       "
@@ -30,23 +30,19 @@
       @close="tunDrawerOff"
     >
       <div slot="contents">
-        <h4 class="text-primary">
-          What Account would you like?
-        </h4>
+        <h4 class="text-primary">What Account would you like?</h4>
         <div class="pt-2">
           <div
             class="media align-items-center"
-            @click="goAccountCreation('signup')"
+            @click="goAccountCreation('signup', 'Passenger')"
           >
             <img
               src="@/assets/icons/avatar-light.svg"
               class="img-thumbnail rounded-circle mr-3"
-              style="width:35px; height:35px;"
+              style="width: 35px; height: 35px"
             />
             <div class="media-body">
-              <h6 class="mb-0">
-                Passenger Account
-              </h6>
+              <h6 class="mb-0">Passenger Account</h6>
               <p>
                 Use this app for requesting a ride and managing your recent
                 trips
@@ -61,12 +57,10 @@
             <img
               src="@/assets/icons/audii.png"
               class="img-thumbnail rounded-circle mr-3"
-              style="width:35px; height:35px;"
+              style="width: 35px; height: 35px"
             />
             <div class="media-body">
-              <h6 class="mb-0">
-                Driver Account
-              </h6>
+              <h6 class="mb-0">Driver Account</h6>
               <p>Make money using this app by accepting passengers requests</p>
             </div>
           </div>
@@ -78,23 +72,19 @@
       @close="tunDrawerOff"
     >
       <div slot="contents">
-        <h4 class="text-primary">
-          What Account do you have?
-        </h4>
+        <h4 class="text-primary">What Account do you have?</h4>
         <div class="pt-2">
           <div
             class="media align-items-center"
-            @click="goAccountCreation('login')"
+            @click="goAccountCreation('login', 'Passenger')"
           >
             <img
               src="@/assets/icons/avatar-light.svg"
               class="img-thumbnail rounded-circle mr-3"
-              style="width:35px; height:35px;"
+              style="width: 35px; height: 35px"
             />
             <div class="media-body">
-              <h6 class="mb-0">
-                Passenger Account
-              </h6>
+              <h6 class="mb-0">Passenger Account</h6>
               <p>Customers account to book cabs</p>
             </div>
           </div>
@@ -106,12 +96,10 @@
             <img
               src="@/assets/icons/audii.png"
               class="img-thumbnail rounded-circle mr-3"
-              style="width:35px; height:35px;"
+              style="width: 35px; height: 35px"
             />
             <div class="media-body">
-              <h6 class="mb-0">
-                Driver Account
-              </h6>
+              <h6 class="mb-0">Driver Account</h6>
               <p>Drivers account to accept requests</p>
             </div>
           </div>
@@ -124,13 +112,9 @@
           <img src="@/assets/logo.png" alt="Main Logo" />
           <div class="text-center my-2">
             <div class="py-1">
-              <h4 class="text-primary">
-                You're almost there!
-              </h4>
+              <h4 class="text-primary">You're almost there!</h4>
             </div>
-            <h6 class="text-primary text-centrer">
-              New around here?
-            </h6>
+            <h6 class="text-primary text-centrer">New around here?</h6>
             <p>Tell us a more about yourself to start using Yego cabs app</p>
             <button
               type="button"
@@ -217,8 +201,8 @@ export default {
     currentUser: {},
     drawerMode: {
       login: false,
-      register: false
-    }
+      register: false,
+    },
   }),
   created() {
     if (this.$store.getters.isLoggedIn) {
@@ -231,8 +215,8 @@ export default {
     }
   },
   methods: {
-    goAccountCreation(routerName) {
-      this.$router.push({ name: routerName });
+    goAccountCreation(routerName, accountType = "driver") {
+      this.$router.push({ name: routerName, query:{accountType: accountType} });
     },
     toggleView(activeView) {
       this.$store.state.drawerBottomOpen = true;
@@ -240,8 +224,8 @@ export default {
     },
     tunDrawerOff() {
       this.$store.state.drawerBottomOpen = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped lang="css">

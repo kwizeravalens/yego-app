@@ -8,7 +8,7 @@
         height: 35px;
         line-height: 35px;
         padding: unset;
-        position: absolute;
+        position: fixed;
         top: 12px;
         left: 17px;
       "
@@ -145,34 +145,41 @@ export default {
   data: () => ({
     credentials: {
       username: null,
-      password: null
+      password: null,
+      accountType: "driver"
     },
     invalidLogin: false,
-    loginSucceed: false
+    loginSucceed: false,
   }),
   created() {},
+  mounted(){
+    this.credentials.accountType = this.$route.query.accountType;
+  },
   methods: {
-    logUser: function() {
-      this.$validator.validateAll().then(result => {
+    logUser: function () {
+      this.$validator.validateAll().then((result) => {
         if (result) {
           var formData = this.formData(this.credentials);
           this.$store
             .dispatch("logUser", formData)
-            .then(response => {
+            .then((response) => {
               if (response.data.error) {
                 this.invalidLogin = true;
                 this.loginSucceed = false;
               } else {
                 this.invalidLogin = false;
                 this.loginSucceed = true;
-                this.$router.push({ name: "account" });
+                if(response.data.user.userType == "driver")
+                  this.$router.push({ name: "DriverRequests" });
+                else
+                  this.$router.push({ name: "map" });
               }
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped lang="css">

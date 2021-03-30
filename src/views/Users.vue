@@ -99,9 +99,7 @@
           </div>
           <div
             class="title-container py-2"
-            :style="
-              `background-image:url(${publicPath}img/dataform_wood_pattern.jpg);padding-left:1.625rem`
-            "
+            :style="`background-image:url(${publicPath}img/dataform_wood_pattern.jpg);padding-left:1.625rem`"
           >
             <h4 class="title-view-item mb-1">Your Poultry Account Users</h4>
             <span class="h5 subtitle-view-item"
@@ -163,8 +161,8 @@ export default {
       lastname: null,
       password: null,
       email: null,
-      phone_number: null
-    }
+      phone_number: null,
+    },
   }),
   created() {
     this.getUsers();
@@ -173,12 +171,12 @@ export default {
     getUsers() {
       this.$store
         .dispatch("getRequest", "customer/get-users")
-        .then(response => {
+        .then((response) => {
           this.users = response.data.users;
         });
     },
     setUser() {
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll().then((result) => {
         if (result) {
           var fd = this.formData(this.newUser);
           let url = "customer/set-user";
@@ -186,7 +184,7 @@ export default {
           let DispatchpParams = { formData: fd, url: url };
           this.$store
             .dispatch("postRequest", DispatchpParams)
-            .then(response => {
+            .then((response) => {
               if (!response.data.error) {
                 this.getUsers();
                 this.toggleModal();
@@ -202,7 +200,7 @@ export default {
         lastname: user.lastname,
         email: user.email,
         phone_number: user.phone,
-        id: user.id
+        id: user.id,
       };
     },
     deleteUser(id) {
@@ -213,7 +211,7 @@ export default {
             this.getUsers();
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>

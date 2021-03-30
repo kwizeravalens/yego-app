@@ -35,7 +35,7 @@ export default {
   computed: {
     currentRouteName() {
       return this.$route.name;
-    }
+    },
   },
   methods: {
     togglePinned() {
@@ -44,8 +44,8 @@ export default {
     toggleSideBar() {
       document.getElementById("app-wrapper").classList.toggle("toggled");
       this.$store.state.toggled = !this.$store.state.toggled;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="css">

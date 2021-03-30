@@ -1,4 +1,4 @@
-# egg
+# Yego Cabs App for academic school purpose
 
 ## Project setup
 ```

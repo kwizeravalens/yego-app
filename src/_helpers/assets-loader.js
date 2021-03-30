@@ -1,4 +1,4 @@
-export const loadedGoogleMapsAPI = new Promise(resolve => {
+export const loadedGoogleMapsAPI = new Promise((resolve) => {
   window["GoogleMapsInit"] = resolve;
   let GMap = document.createElement("script");
   GMap.setAttribute(

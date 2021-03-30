@@ -94,9 +94,7 @@
           </div>
           <div
             class="title-container py-2"
-            :style="
-              `background-image:url(${publicPath}img/dataform_wood_pattern.jpg);padding-left:1.625rem`
-            "
+            :style="`background-image:url(${publicPath}img/dataform_wood_pattern.jpg);padding-left:1.625rem`"
           >
             <h4 class="title-view-item mb-1">Your Cars</h4>
             <span class="h5 subtitle-view-item">{{ cars.length }} cars</span>
@@ -174,10 +172,10 @@ export default {
       model: null,
       year: null,
       plate_number: null,
-      comment: null
+      comment: null,
     },
     cars: [],
-    successMessage: false
+    successMessage: false,
   }),
   created() {
     this.getCars();
@@ -189,19 +187,19 @@ export default {
       }, 5000);
     },
     getCars() {
-      this.$store.dispatch("getRequest", "get_driver_cars").then(response => {
+      this.$store.dispatch("getRequest", "get_driver_cars").then((response) => {
         this.cars = response.data.cars;
       });
     },
     addCar() {
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll().then((result) => {
         if (result) {
           this.$store
             .dispatch("postRequest", {
               formData: this.formData(this.newCar),
-              url: "add_car"
+              url: "add_car",
             })
-            .then(response => {
+            .then((response) => {
               if (!response.data.error) {
                 this.getCars();
                 this.clearObject(this.newCar);
@@ -217,7 +215,7 @@ export default {
       this.$store
         .dispatch("postRequest", {
           url: "delete_car",
-          formData: this.formData({ carId: this.choosenRow.id })
+          formData: this.formData({ carId: this.choosenRow.id }),
         })
         .then(() => {
           this.getCars();
@@ -247,10 +245,10 @@ export default {
         actionType: "car_delete",
         actionButton: "Yes, delete",
         classes: "btn btn-danger",
-        modalOpen: true
+        modalOpen: true,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="css"></style>

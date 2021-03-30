@@ -95,7 +95,7 @@
           <div class="mobile-body">
             <div class="bg-white">
               <h5 class="pt-3 d-flex px-3 text-primary">
-                <span>Garages near you</span>
+                <span>Drivers near you</span>
                 <router-link
                   :to="{ name: 'map' }"
                   class="btn btn-sm btn-primary ml-auto"
@@ -107,7 +107,7 @@
                 <div class="d-flex align-items-center">
                   <div class="text-dark"><h6 class="mb-0">S/N</h6></div>
                   <div class="details-container">
-                    <h5 class="mb-0">Garage</h5>
+                    <h5 class="mb-0">Name</h5>
                   </div>
                   <div class="date-container ml-auto">
                     <span>Distance</span>
@@ -116,18 +116,18 @@
               </div>
               <div
                 class="listing-content pt-3 px-3"
-                v-for="(garage, index) in garages"
-                :key="'garage' + index"
+                v-for="(driver, index) in drivers"
+                :key="'driver' + index"
               >
                 <div class="d-flex align-items-center">
                   <div class="number-container">
                     {{ incrementIndex(index) }}
                   </div>
                   <div class="details-container">
-                    <h5 class="text-dark mb-0">{{ garage.garage_name }}</h5>
+                    <h5 class="text-dark mb-0">{{ driver.firstname + " " + driver.lastname }}</h5>
                   </div>
                   <div class="date-container ml-auto">
-                    <span>{{ garage.distance.toFixed(2) }} km</span>
+                    <span>{{ driver.distance.toFixed(2) }} km</span>
                   </div>
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default {
   data: () => ({
     user: {},
     requests: {},
-    garages: []
+    drivers: [],
   }),
   created() {
     document.body.classList.remove("modal-open");
@@ -154,14 +154,14 @@ export default {
     this.$store
       .dispatch("postRequest", {
         url: "dashboard",
-        formData: this.formData(coords)
+        formData: this.formData(coords),
       })
-      .then(response => {
+      .then((response) => {
         this.requests = { ...response.data.requests };
-        this.garages = response.data.garages;
+        this.drivers = response.data.drivers;
       });
   },
-  methods: {}
+  methods: {},
 };
 </script>
 <style lang="css" scoped>

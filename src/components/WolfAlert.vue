@@ -11,6 +11,7 @@
           padding-right: 15px;
           display: block;
           background: rgba(0, 0, 0, 0.7);
+          z-index: 9999999999
         "
         @click.self="$emit('close')"
       >
@@ -66,31 +67,31 @@ export default {
     modalTitle: String,
     modalContent: {
       type: String,
-      required: true
+      required: true,
     },
     singleButton: {
       type: Boolean,
-      default: false
+      default: false,
     },
     actionButton: {
       type: String,
-      required: true
+      required: true,
     },
     actionButtonClasses: {
       type: String,
-      required: true
+      required: true,
     },
     closeButton: {
       type: String,
-      default: "close"
-    }
+      default: "close",
+    },
   },
   created() {
     this.toggleModalOpen();
   },
   destroyed() {
     this.toggleModalOpen();
-  }
+  },
 };
 </script>
 <style scoped>

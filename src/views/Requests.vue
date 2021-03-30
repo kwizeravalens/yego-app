@@ -149,9 +149,7 @@
           </div>
           <div
             class="title-container py-2"
-            :style="
-              `background-image:url(${publicPath}img/dataform_wood_pattern.jpg);padding-left:1.625rem`
-            "
+            :style="`background-image:url(${publicPath}img/dataform_wood_pattern.jpg);padding-left:1.625rem`"
           >
             <h4 class="title-view-item mb-1">Requests History</h4>
             <span class="h5 subtitle-view-item"
@@ -224,13 +222,13 @@ export default {
       id: null,
       lat: -1.9562495999999998,
       long: 30.1006848,
-      description: null
+      description: null,
     },
     cars: [],
     requests: [],
     fetchInterval: null,
     resolved: false,
-    directId: null
+    directId: null,
   }),
   created() {
     this.getCars();
@@ -240,9 +238,9 @@ export default {
     }
   },
   computed: {
-    requestId: function() {
+    requestId: function () {
       return this.$store.getters.requestId;
-    }
+    },
   },
   mounted() {
     /*this.$nextTick(() => {
@@ -294,9 +292,9 @@ export default {
         this.$store
           .dispatch("postRequest", {
             url: "get_request_state",
-            formData: this.formData({ requestId: requestId })
+            formData: this.formData({ requestId: requestId }),
           })
-          .then(response => {
+          .then((response) => {
             if (
               response.data.requestInfo.resolved == 1 &&
               response.data.requestInfo.cancelled == 0
@@ -311,7 +309,7 @@ export default {
                 actionType: "close_alert",
                 actionButton: "Okey",
                 classes: "btn btn-danger",
-                modalOpen: true
+                modalOpen: true,
               };
               this.getRequests();
             }
@@ -329,7 +327,7 @@ export default {
                 actionType: "close_alert",
                 actionButton: "Okey",
                 classes: "btn btn-danger",
-                modalOpen: true
+                modalOpen: true,
               };
               this.getRequests();
             }
@@ -337,27 +335,27 @@ export default {
       }, 5000);
     },
     getCars() {
-      this.$store.dispatch("getRequest", "get_driver_cars").then(response => {
+      this.$store.dispatch("getRequest", "get_driver_cars").then((response) => {
         this.cars = response.data.cars;
       });
     },
     getRequests() {
       this.$store
         .dispatch("getRequest", "get_driver_requests")
-        .then(response => {
+        .then((response) => {
           this.requests = response.data.requests;
         });
     },
     setRequest() {
       clearInterval(this.fetchInterval);
-      this.$validator.validateAll().then(result => {
+      this.$validator.validateAll().then((result) => {
         if (result) {
           this.$store
             .dispatch("postRequest", {
               formData: this.formData(this.newRequest),
-              url: "request"
+              url: "request",
             })
-            .then(response => {
+            .then((response) => {
               if (response.data.success) {
                 this.getRequests();
                 this.toggleModal();
@@ -368,7 +366,7 @@ export default {
                 this.$store
                   .dispatch("togglePendingRequest", {
                     bool: true,
-                    data: response.data
+                    data: response.data,
                   })
                   .then(() => {
                     this.fetchRequestState();
@@ -377,21 +375,21 @@ export default {
             });
         }
       });
-    }
+    },
   },
   updated() {
     this.$nextTick(() => {
       let items = document.querySelectorAll(".payment-item");
-      items.forEach(item => {
+      items.forEach((item) => {
         item.addEventListener("click", () => {
-          [...item.parentElement.children].forEach(sib =>
+          [...item.parentElement.children].forEach((sib) =>
             sib.classList.remove("choosen")
           );
           item.classList.add("choosen");
         });
       });
     });
-  }
+  },
 };
 </script>
 <style lang="css">

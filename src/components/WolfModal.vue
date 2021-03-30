@@ -65,9 +65,9 @@ export default {
     modalSize: String,
     needFooter: {
       default: true,
-      type: Boolean
-    }
-  }
+      type: Boolean,
+    },
+  },
 };
 </script>
 <style scoped>

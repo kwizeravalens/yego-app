@@ -18,23 +18,23 @@ if (token) {
   Vue.prototype.$http.defaults.headers.common["Authorization"] = token;
 }
 axios.interceptors.request.use(
-  config => {
+  (config) => {
     store.state.isLoading = true;
     return config;
   },
-  error => {
+  (error) => {
     store.state.isLoading = false;
     store.state.activeBtn = null;
     return Promise.reject(error);
   }
 );
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     store.state.isLoading = false;
     store.state.activeBtn = null;
     return response;
   },
-  error => {
+  (error) => {
     store.state.isLoading = false;
     store.state.activeBtn = null;
     return Promise.reject(error);
@@ -52,5 +52,5 @@ Vue.component("bottom-drawer", BottomDrawer);
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

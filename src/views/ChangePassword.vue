@@ -57,10 +57,10 @@ export default {
     credentials: {
       newPassword: null,
       password: null,
-      passwordConf: null
+      passwordConf: null,
     },
     invalidPassword: false,
-    passwordChanged: false
+    passwordChanged: false,
   }),
   methods: {
     gotoHome() {
@@ -73,7 +73,7 @@ export default {
       let DispatchpParams = { formData: formData, url: url };
       this.$store
         .dispatch("postRequest", DispatchpParams)
-        .then(response => {
+        .then((response) => {
           if (!response.data.invalid_password) {
             this.invalidPassword = false;
             this.passwordChanged = true;
@@ -82,8 +82,8 @@ export default {
             this.invalidPassword = true;
           }
         })
-        .catch(err => console.log(err));
-    }
-  }
+        .catch((err) => console.log(err));
+    },
+  },
 };
 </script>

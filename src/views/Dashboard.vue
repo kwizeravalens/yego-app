@@ -1,19 +1,24 @@
 <template>
-  <div style="position:relative">
-    <div id="map" style="height:93vh" />
-    <bottom-drawer v-if="$store.state.drawerBottomOpen && !whereToLocation">
+  <div style="position: relative">
+     <wolf-alert
+      :modalTitle="alertDefaults.title"
+      :modalContent="alertDefaults.content"
+      :actionButton="alertDefaults.actionButton"
+      @accept-alert="handleAlertAction"
+      @close="closeAlert"
+      :actionButtonClasses="alertDefaults.classes"
+      v-if="alertDefaults.modalOpen"
+    />
+    <div id="map" style="height: 93vh" />
+    <bottom-drawer v-if="$store.state.drawerBottomOpen && whereToLocation.trim().length < 2">
       <div slot="contents">
-        <p class="mb-0 text-muted">
-          Nice to see you!
-        </p>
-        <h6 class="text-primary">
-          Where are you going?
-        </h6>
-        <div class="form-group" style="padding: 10px 0px;">
-          <div class="input-group" style="position:relative">
+        <p class="mb-0 text-muted">Nice to see you!</p>
+        <h6 class="text-primary">Where are you going?</h6>
+        <div class="form-group" style="padding: 10px 0px">
+          <div class="input-group" style="position: relative">
             <div
               class="input-group-prepend"
-              style="position:absolute; top: 28%; left: 5px"
+              style="position: absolute; top: 28%; left: 5px"
             >
               <span>
                 <img src="@/assets/icons/marker.svg" />
@@ -40,9 +45,7 @@
           <div class="modal-body">
             <div class="text-center">
               <span class="fas fa-spinner fa-spin" />
-              <div class="label-title">
-                Searching Driver...
-              </div>
+              <div class="label-title">Searching Driver...</div>
             </div>
           </div>
         </div>
@@ -52,15 +55,12 @@
       <div
         id="origin-input-container"
         class="height-auto"
-        :class="{ hidden: !whereToLocation }"
-        style="position: absolute; top: 10px!important"
+        :class="{ hidden: whereToLocation.trim().length < 2 }"
+        style="position: absolute; top: 10px !important"
       >
         <div class="w-100 map-input-container map-input-container-top">
           <span class="map-input-icon">
-            <img
-              :src="`${publicPath}img/place_mark.png`"
-              style="width: 17px;"
-            />
+            <img :src="`${publicPath}img/place_mark.png`" style="width: 17px" />
           </span>
           <div class="map-input d-flex">
             <input
@@ -97,7 +97,7 @@
       </div>
     </div>
 
-    <div class="not-map" style="position:relative">
+    <div class="not-map" style="position: relative">
       <!--Request Ride Button Container Start-->
       <div v-if="viewMode.requestRide" class="request-ride-btn">
         <button
@@ -121,7 +121,7 @@
               <img
                 src="@/assets/icons/verified.svg"
                 class="img-fluid mr-2"
-                style="width:20px;"
+                style="width: 20px"
               />
 
               <div class="media-body">
@@ -141,7 +141,7 @@
                 <span class="map-input-icon">
                   <img
                     :src="`${publicPath}img/place_mark.png`"
-                    style="width: 17px;"
+                    style="width: 17px"
                   />
                 </span>
                 <div class="map-input mr-0 display-flex">
@@ -165,7 +165,7 @@
                   >
                     {{ newRequest.location_to }}
                   </div>
-                  <span class="dotted-line" style="margin-left: 19px;" />
+                  <span class="dotted-line" style="margin-left: 19px" />
                 </div>
               </a>
             </div>
@@ -174,8 +174,8 @@
           <div class="confirm-ride-btn">
             <button
               type="button"
-              class="btn btn-transparent-primary text-white"
-              @click="handleRequestConfirmation()"
+              class="btn btn-primary text-white"
+              @click="getCurrentDrivers"
             >
               Confirm Trip
             </button>
@@ -199,7 +199,7 @@
         </div>
         <div
           class="send-wish-btn"
-          style="position:unset!important"
+          style="position: unset !important"
           @click="handleViewMode('rideOptions')"
         >
           <button type="button" class="btn btn-primary text-white">
@@ -207,37 +207,40 @@
           </button>
         </div>
       </div>
-
-      <bottom-drawer
+      <wolf-modal
         v-if="viewMode.requestConfirmed"
-        @close="viewMode.requestConfirmed = false"
+        @close="
+          viewMode.requestConfirmed = false;
+          toggleModal();
+        "
+        style="display: block"
+        :modalSize="'default'"
+        :headerColor="'#c92f4e'"
+        :need-footer="false"
       >
-        <div slot="contents">
+        <span slot="head" style="padding-top: 10px">Select a driver</span>
+        <div slot="body">
           <div class="tapped-car-container">
-            <h5 class="font-weight-bold text-center mb-1">
-              Choose your driver
-            </h5>
-            <hr />
             <div
               v-for="(driver, i) in drivers"
               :key="'driver' + i"
               class="tapped-car-info-container mb-2"
-              style="padding: 8px 16px 0 0px;"
+              style="padding: 8px 16px 0 0px"
             >
               <div class="d-flex align-items-center">
                 <div class="col-10">
                   <span class="d-block font-weight-bold"
                     >{{ driver.firstname }} {{ driver.lastname }}</span
                   >
-                  <span v-if="false" class="d-block">Male, 32 years Old</span>
+                  <span class="d-block">Male, 32 years Old</span>
                   <div class="float-left font-weight-light">
                     <div class="text-primary">
                       {{ driver.plate_number }}
                     </div>
                   </div>
                 </div>
-                <div class="col-2">
-                  <img src="@/assets/avatar.svg" style="width:50px" />
+                <div class="col-2 mx-auto">
+                  <img src="@/assets/avatar.svg" style="width: 27px" />
                 </div>
               </div>
               <div class="d-flex align-items-center">
@@ -245,27 +248,33 @@
                   v-if="driver.car_image"
                   :src="fileURL + 'uploads/' + driver.car_image"
                   class="img-responsive"
-                  style="width:60px"
+                  style="width: 50px"
                 />
                 <img
                   v-else
                   src="@/assets/icons/mer.png"
                   class="img-responsive"
-                  style="width:60px"
+                  style="width: 50px"
                 />
                 <div class="requested-car-info col-7">
                   <div class="text-center">
                     {{ driver.car_make }}, {{ driver.car_model }}
                   </div>
                 </div>
-                <div class="request-btn">
+                <div class="request-btn col-2 mx-auto">
                   <button
                     type="button"
-                    class="btn btn-transparent-primary"
-                    style="height: auto; line-height: 20px;"
-                    @click="setRequest(driver.id)"
+                    class="btn btn-primary"
+                    style="
+                      height: auto;
+                      line-height: 13px;
+                      max-width: 100px;
+                      padding: 2px 5px;
+                      font-size: 14px;
+                    "
+                    @click="chooseDriver(driver)"
                   >
-                    Request
+                    Select
                   </button>
                 </div>
               </div>
@@ -274,7 +283,8 @@
             </div>
           </div>
         </div>
-      </bottom-drawer>
+      </wolf-modal>
+
       <bottom-drawer
         v-if="viewMode.driverReply"
         @close="viewMode.driverReply = false"
@@ -293,14 +303,12 @@
             <div class="d-flex">
               <div
                 class="bg-white img-thumbnail rounded-circle mx-auto"
-                style="padding:6px; width:45px; height:45px;"
+                style="padding: 6px; width: 45px; height: 45px"
               >
                 <img src="@/assets/icons/close.svg" class="img-fluid" alt />
               </div>
             </div>
-            <p style="color:#000!important" class="mt-2">
-              Cancel this ride
-            </p>
+            <p style="color: #000 !important" class="mt-2">Cancel this ride</p>
           </div>
         </div>
       </bottom-drawer>
@@ -320,31 +328,31 @@ export default {
       wishContainer: false,
       requestConfirmed: false,
       driverReply: false,
-      neutralMode: true
+      neutralMode: true,
     },
     newRequest: {
       location_from: null,
       location_to: null,
-      customer_notes: null
+      customer_notes: null,
     },
     drivers: [],
-    whereToLocation: null
+    whereToLocation: "",
+    fetchInterval: null,
+    resolved: false,
+    directId: null,
+    choosenDriverId: null
   }),
+   computed: {
+    requestId: function () {
+      return this.$store.getters.requestId;
+    },
+  },
   created() {
     this.$store.state.drawerBottomOpen = true;
     this.$store.state.needHeader = false;
-    /*if (this.$store.getters.currentRequest) {
-      if (
-        Object.keys(JSON.parse(this.$store.getters.currentRequest)).includes(
-          "driver_id"
-        )
-      ) {
-        this.falseObject(this.viewMode, "driverReply");
-      } else {
-        this.$store.state.drawerBottomOpen = false;
-        this.getCurrentDrivers();
-      }
-    } */
+     if (this.requestId) {
+      this.fetchRequestState();
+    }
   },
   mounted() {
     this.$store.state.isLoading = true;
@@ -363,10 +371,12 @@ export default {
       this.toggleRideOptions();
     },
     initGoogleMap() {
-      this.axios({
+      let axios = this.axios;
+      delete axios.defaults.headers.common['Authorization'];
+      axios({
         url: "http://ip-api.com/json/",
         method: "GET",
-        headers: { "Content-Type": null }
+        headers: { "Content-Type": null },
       }).then(() => {
         this.GetCoords(
           this.$store.state.coords.lat,
@@ -380,13 +390,13 @@ export default {
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true,
-        zoom: 13
+        zoom: 13,
       });
 
       let infowindow = new google.maps.InfoWindow();
       let marker = new google.maps.Marker({
         position: latlng,
-        map: map
+        map: map,
       });
       var card = document.getElementById("origin-input-container");
       var input = document.getElementById("pac-input-from");
@@ -394,11 +404,11 @@ export default {
       map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
       var autocomplete = new google.maps.places.Autocomplete(input, {
         types: ["geocode"],
-        componentRestrictions: { country: "rw" }
+        componentRestrictions: { country: "rw" },
       });
       var autocomplete2 = new google.maps.places.Autocomplete(input2, {
         types: ["geocode"],
-        componentRestrictions: { country: "rw" }
+        componentRestrictions: { country: "rw" },
       });
 
       // Bind the map's bounds (viewport) property to the autocomplete object,
@@ -434,12 +444,12 @@ export default {
           currentLatLon +
           "&key=AIzaSyCsv-5eNr-tKaYfATuPRvQy914TNr880Gw",
         method: "GET",
-        headers: { "Content-Type": null }
-      }).then(response => {
+        headers: { "Content-Type": null },
+      }).then((response) => {
         map.setZoom(15);
         marker = new google.maps.Marker({
           position: latlng,
-          map: map
+          map: map,
         });
         infowindow.setContent(response.data.results[0].formatted_address);
         input.value = response.data.results[0].formatted_address;
@@ -473,50 +483,126 @@ export default {
         this.handleViewMode("rideOptions");
       } else this.handleViewMode("neutralMode");
     },
-    setRequest(driver_id) {
-      let newRequest = JSON.parse(this.$store.getters.currentRequest);
-      newRequest.driver_id = driver_id;
-      let formData = this.formData(newRequest);
-      let url = "customer/set-request";
-      let DispatchpParams = { formData: formData, url: url };
-      this.$store
-        .dispatch("dukaPostRequest", DispatchpParams)
-        .then(response => {
-          if (!response.data.error) {
-            newRequest.request_id = response.data.request_id;
-            this.handleRequestConfirmation(newRequest);
-            this.falseObject(this.viewMode, "driverReply");
-          }
-        });
+    fetchRequestState() {
+      this.fetchInterval = setInterval(() => {
+        let requestId = this.requestId || this.directId;
+        if (!requestId) {
+          clearInterval(this.fetchInterval);
+        }
+        this.$store.state.activeBtn = "Fetching";
+        this.$store
+          .dispatch("postRequest", {
+            url: "get_request_state",
+            formData: this.formData({ requestId: requestId }),
+          })
+          .then((response) => {
+            if (
+              response.data.requestInfo.accepted == 1 &&
+              response.data.requestInfo.denied == 0
+            ) {
+              clearInterval(this.fetchInterval);
+              this.$store.dispatch("cancelRequest");
+              this.resolved = true;
+              this.alertDefaults = {
+                title: "Request Confirmation",
+                content:
+                  "Your request has been accepted by the driver. Please wait for the driver to pick you up",
+                actionType: "close_alert",
+                actionButton: "Okey",
+                classes: "btn btn-danger",
+                modalOpen: true,
+              };
+              this.getRequests();
+            }
+            if (
+              response.data.requestInfo.denied == 1 &&
+              response.data.requestInfo.accepted == 0
+            ) {
+              clearInterval(this.fetchInterval);
+              this.$store.dispatch("cancelRequest");
+              this.resolved = true;
+              this.alertDefaults = {
+                title: "Request Denied",
+                content:
+                  "Oops! Your request has been denied by the driver. Please try another driver",
+                actionType: "close_alert",
+                actionButton: "Okey",
+                classes: "btn btn-danger",
+                modalOpen: true,
+              };
+              this.getRequests();
+            }
+          });
+      }, 5000);
     },
-    handleRequestConfirmation(givenRequest = null) {
-      this.$store
-        .dispatch("handleNewRequest", givenRequest || this.newRequest)
-        .then(() => {
-          if (!givenRequest) {
-            this.getCurrentDrivers();
-          }
-        });
+    handleAlertAction(){
+      if(this.alertDefaults.actionType == "close_alert")
+        this.clearObject(this.alertDefaults);
+      else 
+        this.setRequest();
+    },
+    chooseDriver(driver){
+      this.choosenDriverId = driver.id;
+      this.alertDefaults = {
+        title: "Confirm a driver",
+        content:
+          "Are you sure you want to select this driver? - <b>" + driver.firstname +" "+ driver.lastname + "</b>",
+        actionType: "set_request",
+        actionButton: "Confirm",
+        classes: "btn btn-danger",
+        modalOpen: true,
+      };
+    },
+    setRequest() {
+      clearInterval(this.fetchInterval);
+      let newRequest = {
+        "pick_up_location" : document.getElementById("pac-input-from").value,
+        "drop_off_location" : document.getElementById("pac-input-to").value,
+        "requested_driver": this.choosenDriverId
+        };
+          this.$store
+            .dispatch("postRequest", {
+              formData: this.formData(newRequest),
+              url: "request",
+            })
+            .then((response) => {
+              if (response.data.success) {
+                this.toggleModal();
+                this.viewMode.requestConfirmed = false;
+                this.clearObject(newRequest);
+                this.clearObject(this.alertDefaults);
+                this.directId = response.data.requestId;
+                this.$store.state.driver = response.data.driver;
+                this.$store.state.requestId = response.data.requestId;
+                this.$store
+                  .dispatch("togglePendingRequest", {
+                    bool: true,
+                    data: response.data,
+                  })
+                  .then(() => {
+                    this.fetchRequestState();
+                  });
+              }
+            });
     },
     getCurrentDrivers() {
       this.$store
-        .dispatch("dukaGetRequest", "customer/get-active-drivers")
-        .then(response => {
+        .dispatch("getRequest", "drivers")
+        .then((response) => {
           this.drivers = response.data.drivers;
           this.handleViewMode("requestConfirmed");
+          this.toggleModal();
         });
     },
     setWhereToAddress() {
-      if (
-        this.whereToLocation.trim() !== "" &&
-        this.whereToLocation !== null &&
-        this.whereToLocation.trim().length > 1
-      ) {
-        var input = document.getElementById("pac-input-to");
-        this.setCaretPosition(input, input.value.length);
+      if (this.whereToLocation.trim().length > 2) {
+        let input = document.getElementById("pac-input-to");
+        input.value = this.whereToLocation;
+        input.focus();
+        input.scrollIntoView();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="css">

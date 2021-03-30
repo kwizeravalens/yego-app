@@ -142,7 +142,7 @@ export default {
         window.location.href.split("#")[0] + "#/driver-account";
     }
   },
-  methods: {}
+  methods: {},
 };
 </script>
 <style scoped lang="css">
