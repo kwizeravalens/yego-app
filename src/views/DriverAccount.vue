@@ -1,95 +1,6 @@
 <template>
   <div class="pt-5">
-    <div class="row pt-2">
-      <div class="col-12">
-        <h5 class="mb-2">Requests overview</h5>
-      </div>
-    </div>
-    <div class="row cards">
-      <div class="col-6 px-2">
-        <div class="card">
-          <div class="card-body px-1">
-            <div class="d-flex align-items-center">
-              <img
-                :src="`${publicPath}img/total.png`"
-                class="card-img"
-                alt=""
-              />
-              <div class="d-block">
-                <span class="mb-0 d-block font-weight-bold"
-                  >Total Requests</span
-                >
-                <h5 class="mb-0 d-block text-right">
-                  {{ requests.total || 0 }}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-6 px-1">
-        <div class="card">
-          <div class="card-body px-1">
-            <div class="d-flex align-items-center">
-              <img
-                :src="`${publicPath}img/pending.png`"
-                class="card-img"
-                alt=""
-              />
-              <div class="d-block">
-                <span class="mb-0 d-block font-weight-bold"
-                  >Pending Requests</span
-                >
-                <h5 class="mb-0 d-block text-right">
-                  {{ requests.pending || 0 }}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row cards">
-      <div class="col-6 px-2">
-        <div class="card">
-          <div class="card-body px-1">
-            <div class="d-flex align-items-center">
-              <img
-                :src="`${publicPath}img/accepted.png`"
-                class="card-img"
-                alt=""
-              />
-              <div class="d-block">
-                <span class="mb-0 d-block font-weight-bold">Accepted ones</span>
-                <h5 class="mb-0 d-block text-right">
-                  {{ requests.resolved || 0 }}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-6 px-1">
-        <div class="card">
-          <div class="card-body px-1">
-            <div class="d-flex align-items-center">
-              <img
-                :src="`${publicPath}img/denied.png`"
-                class="card-img"
-                alt=""
-              />
-              <div class="d-block">
-                <span class="mb-0 d-block font-weight-bold">Canceled Ones</span>
-                <h5 class="mb-0 d-block text-right">
-                  {{ requests.canceled || 0 }}
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
+    <div class="row pt-3">
       <div class="col-12 px-2">
         <div class="mobile">
           <div class="mobile-body">
@@ -107,7 +18,7 @@
                 <div class="d-flex align-items-center">
                   <div class="text-dark"><h6 class="mb-0">S/N</h6></div>
                   <div class="details-container">
-                    <h5 class="mb-0">Name</h5>
+                    <h5 class="mb-0">Name and Phone</h5>
                   </div>
                   <div class="date-container ml-auto">
                     <span>Distance</span>
@@ -125,6 +36,7 @@
                   </div>
                   <div class="details-container">
                     <h5 class="text-dark mb-0">{{ driver.firstname + " " + driver.lastname }}</h5>
+                    <p>Tel: {{ driver.phone }}</p>
                   </div>
                   <div class="date-container ml-auto">
                     <span>{{ driver.distance.toFixed(2) }} km</span>

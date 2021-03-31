@@ -21,7 +21,7 @@
               style="position: absolute; top: 28%; left: 5px"
             >
               <span>
-                <img src="@/assets/icons/marker.svg" />
+                <img :src="`${publicPath}img/marker.svg`" />
               </span>
             </div>
             <input
@@ -72,13 +72,13 @@
             />
 
             <span class="remove" @click="cleanLocations('source')">
-              <img src="@/assets/icons/cross-light.svg" />
+              <img :src="`${publicPath}img/cross-light.svg`" />
             </span>
           </div>
         </div>
         <div class="w-100 map-input-container map-input-container-bottom">
           <span class="map-input-icon">
-            <img src="@/assets/icons/circle.svg" />
+            <img :src="`${publicPath}img/circle.svg`" />
           </span>
           <div class="map-input d-flex">
             <input
@@ -89,7 +89,7 @@
             />
 
             <span class="remove" @click="cleanLocations('destination')">
-              <img src="@/assets/icons/cross-light.svg" />
+              <img :src="`${publicPath}img/cross-light.svg`" />
             </span>
           </div>
           <span class="dotted-line-index" />
@@ -119,7 +119,7 @@
           <div class="payment-options d-flex align-items-center">
             <div class="media align-items-center col-10">
               <img
-                src="@/assets/icons/verified.svg"
+                :src="`${publicPath}img/verified.svg`"
                 class="img-fluid mr-2"
                 style="width: 20px"
               />
@@ -131,7 +131,7 @@
             </div>
             <div class="default-payment-method-container display-flex">
               <div class>
-                <img src="@/assets/icons/audii.png" class="mx-auto" />
+                <img :src="`${publicPath}img/taxi.png`" class="mx-auto" />
               </div>
             </div>
           </div>
@@ -158,7 +158,7 @@
                   class="w-100 map-input-container map-input-container-bottom"
                 >
                   <span class="map-input-icon">
-                    <img src="@/assets/icons/circle.svg" />
+                    <img :src="`${publicPath}img/circle.svg`" />
                   </span>
                   <div
                     class="map-input mr-0 display-flex border-0 controls flex-1 font-weight-normal align-items-center"
@@ -186,7 +186,7 @@
       <div v-if="viewMode.wishContainer" class="wish-container">
         <div class="close-wish">
           <span class="float-right" @click="handleViewMode('rideOptions')">
-            <img src="@/assets/icons/close.svg" />
+            <img :src="`${publicPath}img/icons_delete.png`" />
           </span>
           <span class="clearfix" />
         </div>
@@ -232,7 +232,6 @@
                   <span class="d-block font-weight-bold"
                     >{{ driver.firstname }} {{ driver.lastname }}</span
                   >
-                  <span class="d-block">Male, 32 years Old</span>
                   <div class="float-left font-weight-light">
                     <div class="text-primary">
                       {{ driver.plate_number }}
@@ -240,21 +239,13 @@
                   </div>
                 </div>
                 <div class="col-2 mx-auto">
-                  <img src="@/assets/avatar.svg" style="width: 27px" />
+                  <img :src="`${publicPath}img/avatar.png`" style="width: 27px" />
                 </div>
               </div>
               <div class="d-flex align-items-center">
                 <img
-                  v-if="driver.car_image"
-                  :src="fileURL + 'uploads/' + driver.car_image"
+                  :src="`${publicPath}img/taxi.png`"
                   class="img-responsive"
-                  style="width: 50px"
-                />
-                <img
-                  v-else
-                  src="@/assets/icons/mer.png"
-                  class="img-responsive"
-                  style="width: 50px"
                 />
                 <div class="requested-car-info col-7">
                   <div class="text-center">
@@ -291,21 +282,17 @@
       >
         <img
           slot="overlaycontent"
-          src="@/assets/loading.gif"
+          :src="`${publicPath}img/loading.gif`"
           class="img-fluid mx-auto"
         />
         <div slot="contents">
           <div class="text-center w-100">
-            <h5 class="font-weight-bold text-primary">
-              Waiting for driver's reply...
-            </h5>
-            <hr />
             <div class="d-flex">
               <div
                 class="bg-white img-thumbnail rounded-circle mx-auto"
                 style="padding: 6px; width: 45px; height: 45px"
               >
-                <img src="@/assets/icons/close.svg" class="img-fluid" alt />
+                <img :src="`${publicPath}img/icons_delete.png`" class="img-fluid" alt />
               </div>
             </div>
             <p style="color: #000 !important" class="mt-2">Cancel this ride</p>
@@ -595,7 +582,7 @@ export default {
         });
     },
     setWhereToAddress() {
-      if (this.whereToLocation.trim().length > 2) {
+      if (this.whereToLocation.trim().length > 1) {
         let input = document.getElementById("pac-input-to");
         input.value = this.whereToLocation;
         input.focus();

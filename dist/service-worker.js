@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.bfd5c1af018852edca36e60f320c4c9e.js"
+  "precache-manifest.2e953950c906f2033b30b4b42536aac4.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "yego-app"});

@@ -25,6 +25,56 @@
         />
       </svg>
     </router-link>
+    <svg
+      class="floating-shape top-0 right-0 position-fixed"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      width="181"
+      height="76.649"
+      viewBox="0 0 181 76.649"
+    >
+      <defs>
+        <linearGradient
+          id="linear-gradient"
+          x1="1"
+          x2="0.287"
+          y2="1.279"
+          gradientUnits="objectBoundingBox"
+        >
+          <stop offset="0" stop-color="#ff6f41"></stop>
+          <stop offset="1" stop-color="#fc3997"></stop>
+        </linearGradient>
+        <linearGradient
+          id="linear-gradient-2"
+          y1="0.065"
+          x2="0.5"
+          y2="1"
+          xlink:href="#linear-gradient"
+        ></linearGradient>
+      </defs>
+      <g
+        id="Group_2831"
+        data-name="Group 2831"
+        transform="translate(-575 -3003)"
+      >
+        <path
+          id="Intersection_14"
+          data-name="Intersection 14"
+          d="M0,0H177a4,4,0,0,1,4,4V26.918c-15.161,1.061-35.15,5.038-61.457,13.929-15.874,5.364-29.864,7.612-42.184,7.61C31.7,48.451,9.134,17.561,0,0Z"
+          transform="translate(575 3003)"
+          opacity="0.2"
+          fill="url(#linear-gradient)"
+        ></path>
+        <path
+          id="Intersection_13"
+          data-name="Intersection 13"
+          d="M69.06,43.168C45.119,19.316,17.025,6.275,0,0H145.005a4,4,0,0,1,4,4V76.372c-2.221.158-4.716.277-7.46.277C124.537,76.649,98.038,72.037,69.06,43.168Z"
+          transform="translate(606.995 3003)"
+          opacity="0.2"
+          fill="url(#linear-gradient-2)"
+        ></path>
+      </g>
+    </svg>
     <bottom-drawer
       v-if="$store.state.drawerBottomOpen && drawerMode.register"
       @close="tunDrawerOff"
@@ -37,7 +87,7 @@
             @click="goAccountCreation('signup', 'Passenger')"
           >
             <img
-              src="@/assets/icons/avatar-light.svg"
+              :src="`${publicPath}img/avatar.png`"
               class="img-thumbnail rounded-circle mr-3"
               style="width: 35px; height: 35px"
             />
@@ -55,7 +105,7 @@
             @click="goAccountCreation('signup')"
           >
             <img
-              src="@/assets/icons/audii.png"
+              :src="`${publicPath}img/taxi.png`"
               class="img-thumbnail rounded-circle mr-3"
               style="width: 35px; height: 35px"
             />
@@ -79,7 +129,7 @@
             @click="goAccountCreation('login', 'Passenger')"
           >
             <img
-              src="@/assets/icons/avatar-light.svg"
+              :src="`${publicPath}img/avatar.png`"
               class="img-thumbnail rounded-circle mr-3"
               style="width: 35px; height: 35px"
             />
@@ -94,7 +144,7 @@
             @click="goAccountCreation('login')"
           >
             <img
-              src="@/assets/icons/audii.png"
+              :src="`${publicPath}img/taxi.png`"
               class="img-thumbnail rounded-circle mr-3"
               style="width: 35px; height: 35px"
             />
@@ -109,13 +159,13 @@
     <div class="container-fluid min-vh-100">
       <div class="row min-vh-100 justify-content-center">
         <div class="col-12 my-auto">
-          <img src="@/assets/logo.png" alt="Main Logo" />
           <div class="text-center my-2">
+            <img :src="`${publicPath}img/logo.png`" alt="Main Logo" />
             <div class="py-1">
-              <h4 class="text-primary">You're almost there!</h4>
+              <h3 class="text-dark mb-0">You're almost there!</h3>
             </div>
             <h6 class="text-primary text-centrer">New around here?</h6>
-            <p>Tell us a more about yourself to start using Yego cabs app</p>
+            
             <button
               type="button"
               class="btn btn-primary text-white w-100 mb-3"
@@ -123,11 +173,10 @@
             >
               Get Stated
             </button>
-            <div class="mt-5">
+            <div class="mt-3">
               <h6 class="text-primary text-centrer">
                 Already have account here?
               </h6>
-              <p>Log into your account now</p>
               <button
                 type="button"
                 class="btn btn-primary text-white w-100"

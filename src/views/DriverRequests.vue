@@ -7,26 +7,25 @@
         class="img-fluid mx-auto"
       />
       <div slot="contents">
-        <div class="text-center w-100">
+        <div>
           <h6>You have a pending Trip</h6>
           <div class="border py-2 px-3">
             <p class="mb-0">Client Name: {{ client.firstname || "N/A" }}</p>
             <p class="mb-0">Client Number: {{ client.phone || "N/A" }}</p>
           </div>
-          <div class="d-flex">
-            <div
-              class="bg-white img-thumbnail rounded-circle mx-auto"
-              style="padding: 6px; width: 45px; height: 45px"
+         
+            <button
+              type="button"
+              class="btn btn-primary mt-2"
               @click="closeTrip"
             >
               <img
-                :src="`${publicPath}img/icons_delete.png`"
+                :src="`${publicPath}img/verified.svg`"
                 class="img-fluid"
-                
+                style="width: 20px"
               />
-            </div>
-          </div>
-          <p style="color: #000 !important" class="mt-2">Complete Trip</p>
+              Complete Trip
+            </button>
         </div>
       </div>
     </bottom-drawer>
@@ -48,11 +47,7 @@
         >
         <span class="slider" />
       </label>
-      <img
-        src="@/assets/icons/map-position.svg"
-        class="float-right"
-        alt="Map Position"
-      >
+      
       <div class="clearfix" />
 
       <div
@@ -130,7 +125,7 @@
                     >
                       <span class="map-input-icon">
                         <img
-                          src="@/assets/icons/circle.svg"
+                          :src="`${publicPath}img/circle.svg`"
                           style="margin-top:0px"
                         >
                       </span>
@@ -171,34 +166,6 @@
         </div>
       </div>
     </wolf-modal>
-
-    <div
-      v-if="false"
-      class="go-to-pickup-btn"
-    >
-      <div class>
-        <div class="text-center">
-          <img
-            class="profile-picture-img"
-            :src="`${publicPath}img/avatar.png`"
-          >
-          <div class="tapped-car-info-header-icons float-right">
-            <div class="double-up slide-up font-20 float-right">
-              <img src="@/assets/icons/uparrow.svg">
-            </div>
-            <div class="clearfix" />
-          </div>
-          <div>Amanda Legran</div>
-
-          <button
-            type="button"
-            class="btn btn-primary font-weight-light w-100 text-uppercase text-white"
-          >
-            Drop off
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

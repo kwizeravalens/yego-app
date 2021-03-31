@@ -131,7 +131,7 @@
                 <div class="details-container">
                   <h5 class="text-dark mb-0">{{ car.plate_number }}</h5>
                   <h6 class="text-primary">
-                    {{ `${car.make}, ${car.model}, ${car.car_year}` }}
+                    {{ `${car.car_make}, ${car.car_model}` }}
                   </h6>
                 </div>
                 <div class="date-container ml-auto">

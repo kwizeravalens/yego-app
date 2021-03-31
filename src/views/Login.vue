@@ -81,7 +81,7 @@
           <div class="w-100">
             <div class="text-center w-100">
               <img
-                src="@/assets/logo.png"
+                :src="`${publicPath}img/logo.png`"
                 class="img-fluid"
                 style="cursor: pointer; width: 75% !important"
               />

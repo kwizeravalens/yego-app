@@ -56,12 +56,12 @@
           <div class="mb-3 w-100">
             <div class="text-center w-100">
               <img
-                src="@/assets/logo.png"
+                :src="`${publicPath}img/logo.png`"
                 style="cursor: pointer; width: 75% !important"
                 class="img-fluid"
               />
             </div>
-            <div class="pt-3">
+            <div class="pt-5">
               <h4 class="text-center font-weight-bold mb-1">
                 Welcome to Yego Cabs App
               </h4>
@@ -69,8 +69,7 @@
             <div class="pt-3 1-100">
               <router-link
                 :to="{ name: 'home' }"
-                class="btn btn-outline-primary btn-block mb-3 py-3"
-                style="background: rgba(39, 43, 65, 0.15); color: #272b41"
+                class="btn btn-primary btn-block mb-3 py-3"
                 >Get Started Now!</router-link
               >
             </div>

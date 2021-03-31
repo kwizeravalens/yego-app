@@ -43,7 +43,7 @@
         <div class="sidebar-menu">
           <ul>
             <li class="header-menu pt-2">Navigation</li>
-            <li>
+            <li v-if="$store.state.user.userType == 'customer'">
               <router-link :to="{ name: 'account' }">
                 <img
                   :src="`${publicPath}img/home.png`"
@@ -53,7 +53,7 @@
                 <span class="menu-text">Dashboard</span>
               </router-link>
             </li>
-            <li>
+            <li v-if="$store.state.user.userType == 'driver'">
               <router-link :to="{ name: 'cars' }">
                 <img
                   :src="`${publicPath}img/cars.png`"
@@ -63,8 +63,8 @@
                 <span class="menu-text">Your Cars</span>
               </router-link>
             </li>
-            <li>
-              <router-link :to="{ name: '' }">
+            <li v-if="$store.state.user.userType == 'driver'">
+              <router-link :to="{ name: 'DriverRequests' }">
                 <img
                   :src="`${publicPath}img/requests.png`"
                   class="icon-img"
